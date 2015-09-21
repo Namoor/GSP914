@@ -13,10 +13,47 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Quelldateien\Scene">
+      <UniqueIdentifier>{c6ab7c39-ffb1-4ac6-9792-1bb84ec36952}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Scene\2DScene">
+      <UniqueIdentifier>{a7e3ea24-47e9-46a8-9d18-b5b0e8d61ba3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\System">
+      <UniqueIdentifier>{4c5c7b32-f84d-4555-a58c-6c8e04ffcc01}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="2DScene.cpp">
+      <Filter>Quelldateien\Scene\2DScene</Filter>
+    </ClCompile>
+    <ClCompile Include="System.cpp">
+      <Filter>Quelldateien\System</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="IScene.h">
+      <Filter>Quelldateien\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="d3dinclude.h">
+      <Filter>Quelldateien</Filter>
+    </ClInclude>
+    <ClInclude Include="2DScene.h">
+      <Filter>Quelldateien\Scene\2DScene</Filter>
+    </ClInclude>
+    <ClInclude Include="System.h">
+      <Filter>Quelldateien\System</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexStruct.h">
+      <Filter>Quelldateien</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="UnserErsterShader.hlsl">
+      <Filter>Quelldateien</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
