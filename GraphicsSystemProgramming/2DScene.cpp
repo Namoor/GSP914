@@ -28,7 +28,7 @@ void Scene2D::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 	Vertices[3].Position = D3DXVECTOR3(0.5f, -0.5f, 0);
 
 
-	int Indices[6];
+	unsigned int Indices[6];
 	// triangle oben links
 	Indices[0] = 0;
 	Indices[1] = 1;
@@ -43,7 +43,7 @@ void Scene2D::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 
 
 	// -------------------------------------------------------- IndexBuffer --------------------------------------
-	ID3D11Buffer* _IndexBuffer = nullptr;
+	m_pIndexBuffer = nullptr;
 	D3D11_BUFFER_DESC _IndexBufferDesc;
 	ZeroMemory(&_IndexBufferDesc, sizeof(_IndexBufferDesc));
 
@@ -52,16 +52,16 @@ void Scene2D::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 	_IndexBufferDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_INDEX_BUFFER;
 	_IndexBufferDesc.Usage = D3D11_USAGE::D3D11_USAGE_DYNAMIC;
 
-	m_pDevice->CreateBuffer(&_IndexBufferDesc, nullptr, &_IndexBuffer);
+	m_pDevice->CreateBuffer(&_IndexBufferDesc, nullptr, &m_pIndexBuffer);
 
 	D3D11_MAPPED_SUBRESOURCE _MappedResource;
-	m_pDeviceContext->Map(_IndexBuffer, 0, D3D11_MAP::D3D11_MAP_WRITE_DISCARD, 0, &_MappedResource);
+	m_pDeviceContext->Map(m_pIndexBuffer, 0, D3D11_MAP::D3D11_MAP_WRITE_DISCARD, 0, &_MappedResource);
 	memcpy(_MappedResource.pData, &Indices, 6 * sizeof(int));
-	m_pDeviceContext->Unmap(_IndexBuffer, 0);
+	m_pDeviceContext->Unmap(m_pIndexBuffer, 0);
 
 
 	// -------------------------------------------------------- VertexBuffer -------------------------------------
-	ID3D11Buffer* _VertexBuffer = nullptr;
+	m_pVertexBuffer = nullptr;
 
 	D3D11_BUFFER_DESC _VertexBufferDesc;
 	ZeroMemory(&_VertexBufferDesc, sizeof(_VertexBufferDesc));
@@ -71,16 +71,16 @@ void Scene2D::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 	_VertexBufferDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_VERTEX_BUFFER;
 	_VertexBufferDesc.Usage = D3D11_USAGE::D3D11_USAGE_DYNAMIC;
 
-	m_pDevice->CreateBuffer(&_VertexBufferDesc, nullptr, &_VertexBuffer);
+	m_pDevice->CreateBuffer(&_VertexBufferDesc, nullptr, &m_pVertexBuffer);
 
 	_MappedResource;
-	m_pDeviceContext->Map(_VertexBuffer, 0, D3D11_MAP::D3D11_MAP_WRITE_DISCARD, 0, &_MappedResource);
+	m_pDeviceContext->Map(m_pVertexBuffer, 0, D3D11_MAP::D3D11_MAP_WRITE_DISCARD, 0, &_MappedResource);
 	memcpy(_MappedResource.pData, &Vertices, 4 * sizeof(VertexStruct));
-	m_pDeviceContext->Unmap(_VertexBuffer, 0);
+	m_pDeviceContext->Unmap(m_pVertexBuffer, 0);
 
 
-	ID3D11PixelShader* _pPixelShader = nullptr;
-	ID3D11VertexShader* _pVertexShader = nullptr;
+	m_pPixelShader = nullptr;
+	m_pVertexShader = nullptr;
 
 	ID3D10Blob* _pVertexShaderBlob;
 	ID3D10Blob* _pError;
@@ -95,7 +95,7 @@ void Scene2D::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 	}
 
 	m_pDevice->CreateVertexShader(_pVertexShaderBlob->GetBufferPointer(), _pVertexShaderBlob->GetBufferSize(),
-		nullptr, &_pVertexShader);
+		nullptr, &m_pVertexShader);
 
 	ID3D10Blob* _pPixelShaderBlob;
 
@@ -109,7 +109,7 @@ void Scene2D::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 	}
 
 	m_pDevice->CreatePixelShader(_pPixelShaderBlob->GetBufferPointer(), _pPixelShaderBlob->GetBufferSize(),
-		nullptr, &_pPixelShader);
+		nullptr, &m_pPixelShader);
 
 	D3D11_INPUT_ELEMENT_DESC _IED[1];
 	// identifizierung auf seiten des Shaders
@@ -123,8 +123,8 @@ void Scene2D::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 	_IED[0].InputSlot = 0;
 	_IED[0].InputSlotClass = D3D11_INPUT_CLASSIFICATION::D3D11_INPUT_PER_VERTEX_DATA;
 
-	ID3D11InputLayout* _pInputLayout;
-	m_pDevice->CreateInputLayout(_IED, 1, _pVertexShaderBlob->GetBufferPointer(), _pVertexShaderBlob->GetBufferSize(), &_pInputLayout);
+	m_pDevice->CreateInputLayout(_IED, 1, _pVertexShaderBlob->GetBufferPointer(), 
+		_pVertexShaderBlob->GetBufferSize(), &m_pInputLayout);
 
 }
 
@@ -135,8 +135,22 @@ void Scene2D::Update()
 
 void Scene2D::Render()
 {
-	
+	m_pDeviceContext->VSSetShader(m_pVertexShader, nullptr, 0);
+	m_pDeviceContext->PSSetShader(m_pPixelShader, nullptr, 0);
 
+	m_pDeviceContext->IASetInputLayout(m_pInputLayout);
+
+	UINT Stride = sizeof(VertexStruct);
+	UINT Offset = 0;
+
+	m_pDeviceContext->IASetIndexBuffer(m_pIndexBuffer,
+		DXGI_FORMAT::DXGI_FORMAT_R32_UINT, 0);
+	m_pDeviceContext->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &Stride, &Offset);
+
+	m_pDeviceContext->IASetPrimitiveTopology(
+		D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	m_pDeviceContext->DrawIndexed(6, 0, 0);
 
 }
 

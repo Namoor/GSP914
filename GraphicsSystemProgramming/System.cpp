@@ -47,9 +47,9 @@ void System::Run(IScene* p_pScene)
 
 
 		float _Color[4];
-		_Color[0] = (rand() % 256) / 255.0f;
-		_Color[1] = (rand() % 256) / 255.0f;
-		_Color[2] = (rand() % 256) / 255.0f;
+		_Color[0] = 0.5f;//(rand() % 256) / 255.0f;
+		_Color[1] = 0.5f;//(rand() % 256) / 255.0f;
+		_Color[2] = 0.5f;//(rand() % 256) / 255.0f;
 		_Color[3] = 1;
 
 		m_pDeviceContext->ClearRenderTargetView(m_pBackBuffer, _Color);
@@ -58,7 +58,7 @@ void System::Run(IScene* p_pScene)
 
 		m_pScene->Render();
 
-		m_pSwapChain->Present(0, 0);
+		m_pSwapChain->Present(1, 0);
 
 	}
 
@@ -89,8 +89,8 @@ void System::InitWindow()
 	RECT WindowRect;
 	WindowRect.top = 100;
 	WindowRect.left = 100;
-	WindowRect.bottom = 200;
-	WindowRect.right = 200;
+	WindowRect.bottom = 700;
+	WindowRect.right = 900;
 
 	//Fenster erzeugen
 	m_Window = CreateWindowEx(0,
@@ -151,5 +151,19 @@ void System::InitGraphics()
 	m_pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&m_pBackbufferTexture);
 
 	m_pDevice->CreateRenderTargetView(m_pBackbufferTexture, nullptr, &m_pBackBuffer);
+
+	m_pDeviceContext->OMSetRenderTargets(1, &m_pBackBuffer, nullptr);
+
+	D3D11_VIEWPORT _Viewport;
+
+	_Viewport.TopLeftX = 0;
+	_Viewport.TopLeftY = 0;
+
+	_Viewport.Width = 800;
+	_Viewport.Height = 600;
+
+	_Viewport.MinDepth = 0;
+	_Viewport.MaxDepth = 1;
+	m_pDeviceContext->RSSetViewports(1, &_Viewport);
 
 }
