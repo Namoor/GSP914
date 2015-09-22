@@ -1,11 +1,31 @@
-float4 VShader( float3 pos : POSITION0 ) : SV_POSITION
+
+struct VertexShaderOut
 {
-	return float4(pos, 1);
+	float4 pos : SV_POSITION;
+	float4 col : COLOR0;
+	float2 uv : TEXCOORD0;
+};
+
+
+VertexShaderOut VShader(float3 pos : POSITION0, float4 col : COLOR0, float2 uv : TEXCOORD0)
+{
+	VertexShaderOut _Out;
+
+	_Out.pos = float4(pos, 1);
+	_Out.col = col;
+	_Out.uv = uv;
+
+	return _Out; 
 }
 
+Texture2D gTexture;
 
-float4 PShader(float4 pos : SV_POSITION) : SV_TARGET
+SamplerState gSampler;
+
+float4 PShader(VertexShaderOut _In) : SV_TARGET
 {
-	return float4(1, 1, 1, 1);
+	return gTexture.Sample(gSampler, _In.uv);
+
+	//return float4(_In.uv,0,1);
 }
 

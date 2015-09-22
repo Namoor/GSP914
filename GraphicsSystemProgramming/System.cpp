@@ -92,6 +92,8 @@ void System::InitWindow()
 	WindowRect.bottom = 700;
 	WindowRect.right = 900;
 
+	AdjustWindowRect(&WindowRect, WS_OVERLAPPEDWINDOW, false);
+
 	//Fenster erzeugen
 	m_Window = CreateWindowEx(0,
 		TEXT("WindowBauplan"),
