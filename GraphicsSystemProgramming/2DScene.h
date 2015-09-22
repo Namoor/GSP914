@@ -2,6 +2,8 @@
 
 #include "IScene.h"
 
+#include "SpriteBatch.h"
+
 class Scene2D : public IScene
 {
 public:
@@ -17,6 +19,8 @@ public:
 
 
 private:
+	SpriteBatch* m_pSpriteBatch;
+
 	ID3D11Device* m_pDevice;
 	ID3D11DeviceContext* m_pDeviceContext;
 

@@ -27,7 +27,7 @@ void System::Run(IScene* p_pScene)
 
 	m_pScene->Init(m_pDevice, m_pDeviceContext);
 
-
+	int i = 0;
 
 	MSG msg;
 

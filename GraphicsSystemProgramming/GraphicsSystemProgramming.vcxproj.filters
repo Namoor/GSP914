@@ -22,6 +22,9 @@
     <Filter Include="Quelldateien\System">
       <UniqueIdentifier>{4c5c7b32-f84d-4555-a58c-6c8e04ffcc01}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\SpriteBatch">
+      <UniqueIdentifier>{346fa6bb-7c62-48ec-a24f-099cfd941921}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -32,6 +35,12 @@
     </ClCompile>
     <ClCompile Include="System.cpp">
       <Filter>Quelldateien\System</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteBatch.cpp">
+      <Filter>Quelldateien\SpriteBatch</Filter>
+    </ClCompile>
+    <ClCompile Include="Rect.cpp">
+      <Filter>Quelldateien\SpriteBatch</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -50,10 +59,22 @@
     <ClInclude Include="VertexStruct.h">
       <Filter>Quelldateien</Filter>
     </ClInclude>
+    <ClInclude Include="SpriteBatch.h">
+      <Filter>Quelldateien\SpriteBatch</Filter>
+    </ClInclude>
+    <ClInclude Include="Rect.h">
+      <Filter>Quelldateien\SpriteBatch</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteBatch_Vertex.h">
+      <Filter>Quelldateien\SpriteBatch</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="UnserErsterShader.hlsl">
       <Filter>Quelldateien</Filter>
+    </FxCompile>
+    <FxCompile Include="SpriteBatch.hlsl">
+      <Filter>Quelldateien\SpriteBatch</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

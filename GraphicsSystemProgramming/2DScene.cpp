@@ -22,6 +22,9 @@ void Scene2D::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 	D3DX11CreateShaderResourceViewFromFile(m_pDevice, TEXT("TestTexture.jpg"),
 		nullptr, nullptr, &m_pTexture, nullptr);
 
+	m_pSpriteBatch = new SpriteBatch();
+	m_pSpriteBatch->Init(m_pDevice, m_pDeviceContext);
+
 
 	VertexStruct Vertices[4];
 
@@ -35,10 +38,10 @@ void Scene2D::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 	Vertices[2].Color = D3DXVECTOR4(1, 1, 1, 1);
 	Vertices[3].Color = D3DXVECTOR4(1, 1, 1, 1);
 
-	Vertices[0].UV = D3DXVECTOR2(0, 0);
-	Vertices[1].UV = D3DXVECTOR2(0, 1);
-	Vertices[2].UV = D3DXVECTOR2(1, 1);
-	Vertices[3].UV = D3DXVECTOR2(1, 0);
+	Vertices[0].UV = D3DXVECTOR2(0, 1);
+	Vertices[1].UV = D3DXVECTOR2(0, 0);
+	Vertices[2].UV = D3DXVECTOR2(1, 0);
+	Vertices[3].UV = D3DXVECTOR2(1, 1);
 
 
 
@@ -185,7 +188,20 @@ void Scene2D::Render()
 	m_pDeviceContext->IASetPrimitiveTopology(
 		D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	m_pDeviceContext->DrawIndexed(6, 0, 0);
+	//m_pDeviceContext->DrawIndexed(6, 0, 0);
+
+
+	m_pSpriteBatch->Begin();
+
+	for (int i = 0; i < 200000; i++)
+	{
+		int x = rand() % 1000;
+		int y = rand() % 1000;
+
+		m_pSpriteBatch->DrawTexture(m_pTexture, Rect(x, y, 10, 10), Rect(0, 0, 0, 0), D3DXVECTOR4(1, 1, 1, 1));
+	}
+
+	m_pSpriteBatch->End();
 
 }
 
