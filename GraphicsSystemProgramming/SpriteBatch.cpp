@@ -1,6 +1,6 @@
 #include "SpriteBatch.h"
 
-#define BATCHSIZE 1000
+#define BATCHSIZE 10000
 
 SpriteBatch::SpriteBatch()
 {
@@ -14,6 +14,8 @@ SpriteBatch::SpriteBatch()
 
 	m_pIndexBuffer = nullptr;
 	m_pVertexBuffer = nullptr;
+
+	m_pCurrentTexture = nullptr;
 }
 
 void SpriteBatch::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pContext)
@@ -134,6 +136,9 @@ void SpriteBatch::Begin()
 
 void SpriteBatch::End()
 {
+	if (m_DrawCallCount == 0)
+		return;
+
 	// Daten von m_pVertices auf die Grafikkarte kopieren (m_pVertexBuffer)
 	D3D11_MAPPED_SUBRESOURCE _MSR;
 
@@ -143,6 +148,9 @@ void SpriteBatch::End()
 
 
 	// States setzen
+	m_pDevCon->PSSetShaderResources(0, 1, &m_pCurrentTexture);
+
+	
 	m_pDevCon->PSSetShader(m_pPixelShader, nullptr, 0);
 	m_pDevCon->VSSetShader(m_pVertexShader, nullptr, 0);
 
@@ -160,6 +168,13 @@ void SpriteBatch::End()
 
 void SpriteBatch::DrawTexture(ID3D11ShaderResourceView* p_pSRV, Rect Destination, Rect Source, D3DXVECTOR4 Color)
 {
+	if (p_pSRV != m_pCurrentTexture)
+	{
+		End();
+		Begin();
+		m_pCurrentTexture = p_pSRV;
+	}
+
 	float _PosXStart = Destination.x / m_ScreenWidth * 2 - 1;
 	float _PosXEnd = (Destination.x + Destination.width) / m_ScreenWidth * 2 - 1;
 	float _PosYStart = -1 * (Destination.y / m_ScreenHeight * 2 - 1);
@@ -179,10 +194,15 @@ void SpriteBatch::DrawTexture(ID3D11ShaderResourceView* p_pSRV, Rect Destination
 	m_pVertices[m_DrawCallCount * 4 + 2].Color = Color;
 	m_pVertices[m_DrawCallCount * 4 + 3].Color = Color;
 
-	m_pVertices[m_DrawCallCount * 4 + 0].TexCoord = D3DXVECTOR2(0, 1);
-	m_pVertices[m_DrawCallCount * 4 + 1].TexCoord = D3DXVECTOR2(0, 0);
-	m_pVertices[m_DrawCallCount * 4 + 2].TexCoord = D3DXVECTOR2(1, 0);
-	m_pVertices[m_DrawCallCount * 4 + 3].TexCoord = D3DXVECTOR2(1, 1);
+	float _UVXStart = Source.x;
+	float _UVXEnd = Source.x + Source.width;
+	float _UVYStart = Source.y;
+	float _UVYEnd = Source.y + Source.height;
+
+	m_pVertices[m_DrawCallCount * 4 + 0].TexCoord = D3DXVECTOR2(_UVXStart, _UVYEnd);
+	m_pVertices[m_DrawCallCount * 4 + 1].TexCoord = D3DXVECTOR2(_UVXStart, _UVYStart);
+	m_pVertices[m_DrawCallCount * 4 + 2].TexCoord = D3DXVECTOR2(_UVXEnd, _UVYStart);
+	m_pVertices[m_DrawCallCount * 4 + 3].TexCoord = D3DXVECTOR2(_UVXEnd, _UVYEnd);
 
 
 	m_DrawCallCount++;
@@ -194,4 +214,19 @@ void SpriteBatch::DrawTexture(ID3D11ShaderResourceView* p_pSRV, Rect Destination
 	}
 }
 
+
+void SpriteBatch::DrawTexture(ID3D11ShaderResourceView* p_pTexture, Rect Destination, Rect Source)
+{
+	DrawTexture(p_pTexture, Destination, Source, D3DXVECTOR4(1, 1, 1, 1));
+}
+
+void SpriteBatch::DrawTexture(ID3D11ShaderResourceView* p_pTexture, Rect Destination, D3DXVECTOR4 p_Color)
+{
+	DrawTexture(p_pTexture, Destination, Rect(0, 0, 1, 1), p_Color);
+}
+
+void SpriteBatch::DrawTexture(ID3D11ShaderResourceView* p_pTexture, Rect Destination)
+{
+	DrawTexture(p_pTexture, Destination, Rect(0, 0, 1, 1), D3DXVECTOR4(1, 1, 1, 1));
+}
 

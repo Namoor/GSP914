@@ -4,6 +4,8 @@
 
 #include "SpriteBatch.h"
 
+#include "SpriteFont.h"
+
 class Scene2D : public IScene
 {
 public:
@@ -31,6 +33,7 @@ private:
 	ID3D11PixelShader* m_pPixelShader;
 
 	ID3D11ShaderResourceView* m_pTexture;
+	ID3D11ShaderResourceView* m_pTexture2;
 
 	ID3D11InputLayout* m_pInputLayout;
 

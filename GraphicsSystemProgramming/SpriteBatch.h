@@ -16,6 +16,9 @@ public:
 	void End();
 
 	void DrawTexture(ID3D11ShaderResourceView* p_pTexture, Rect Destination, Rect Source, D3DXVECTOR4 p_Color);
+	void DrawTexture(ID3D11ShaderResourceView* p_pTexture, Rect Destination, Rect Source);
+	void DrawTexture(ID3D11ShaderResourceView* p_pTexture, Rect Destination, D3DXVECTOR4 p_Color);
+	void DrawTexture(ID3D11ShaderResourceView* p_pTexture, Rect Destination);
 
 private:
 	SpriteBatch_Vertex* m_pVertices;
@@ -35,4 +38,6 @@ private:
 
 	ID3D11Device* m_pDevice;
 	ID3D11DeviceContext* m_pDevCon;
+
+	ID3D11ShaderResourceView* m_pCurrentTexture;
 };

@@ -27,7 +27,6 @@ void System::Run(IScene* p_pScene)
 
 	m_pScene->Init(m_pDevice, m_pDeviceContext);
 
-	int i = 0;
 
 	MSG msg;
 
@@ -58,7 +57,8 @@ void System::Run(IScene* p_pScene)
 
 		m_pScene->Render();
 
-		m_pSwapChain->Present(1, 0);
+		m_pSwapChain->Present(0, 0);
+
 
 	}
 
