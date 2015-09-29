@@ -30,6 +30,8 @@ void System::Run(IScene* p_pScene)
 
 	MSG msg;
 
+	m_pTimer = new Timer();
+
 	//GameLoop
 	while (true)
 	{
@@ -53,7 +55,8 @@ void System::Run(IScene* p_pScene)
 
 		m_pDeviceContext->ClearRenderTargetView(m_pBackBuffer, _Color);
 
-		m_pScene->Update();
+
+		m_pScene->Update(m_pTimer->GetDeltaTime());
 
 		m_pScene->Render();
 

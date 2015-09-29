@@ -28,6 +28,12 @@
     <Filter Include="Quelldateien\SpriteFont">
       <UniqueIdentifier>{c6ae2578-bc28-4f9b-b98b-7100d938f650}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Input">
+      <UniqueIdentifier>{b0f2a242-a38a-4038-9a59-da9434611899}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Timer">
+      <UniqueIdentifier>{b329e0bd-ec8f-49f1-acf0-abbecdaf579c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -47,6 +53,12 @@
     </ClCompile>
     <ClCompile Include="SpriteFont.cpp">
       <Filter>Quelldateien\SpriteFont</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Quelldateien\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Quelldateien\Timer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +88,12 @@
     </ClInclude>
     <ClInclude Include="SpriteFont.h">
       <Filter>Quelldateien\SpriteFont</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Quelldateien\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Quelldateien\Timer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

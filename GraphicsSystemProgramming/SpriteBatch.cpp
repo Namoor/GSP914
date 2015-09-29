@@ -127,6 +127,26 @@ void SpriteBatch::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pContext)
 	m_pDevice->CreateInputLayout(_IED, 3, _pVertexShader->GetBufferPointer(),
 		_pVertexShader->GetBufferSize(), &m_pInputLayout);
 
+	D3D11_BLEND_DESC _BDesc;
+	ZeroMemory(&_BDesc, sizeof(_BDesc));
+
+	_BDesc.AlphaToCoverageEnable = false;
+	_BDesc.IndependentBlendEnable = false;
+
+	_BDesc.RenderTarget[0].BlendEnable = true;
+	_BDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+	_BDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP::D3D11_BLEND_OP_ADD;
+	_BDesc.RenderTarget[0].SrcBlend = D3D11_BLEND::D3D11_BLEND_SRC_ALPHA;
+	_BDesc.RenderTarget[0].DestBlend = D3D11_BLEND::D3D11_BLEND_INV_SRC_ALPHA;
+
+
+	_BDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP::D3D11_BLEND_OP_ADD;
+	_BDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND::D3D11_BLEND_SRC_ALPHA;
+	_BDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND::D3D11_BLEND_INV_SRC_ALPHA;
+
+	m_pDevice->CreateBlendState(&_BDesc, &m_pBlendState);
+
 }
 
 void SpriteBatch::Begin()
@@ -150,6 +170,7 @@ void SpriteBatch::End()
 	// States setzen
 	m_pDevCon->PSSetShaderResources(0, 1, &m_pCurrentTexture);
 
+	m_pDevCon->OMSetBlendState(m_pBlendState, nullptr, 0xFFFFFFFF);
 	
 	m_pDevCon->PSSetShader(m_pPixelShader, nullptr, 0);
 	m_pDevCon->VSSetShader(m_pVertexShader, nullptr, 0);
@@ -228,5 +249,52 @@ void SpriteBatch::DrawTexture(ID3D11ShaderResourceView* p_pTexture, Rect Destina
 void SpriteBatch::DrawTexture(ID3D11ShaderResourceView* p_pTexture, Rect Destination)
 {
 	DrawTexture(p_pTexture, Destination, Rect(0, 0, 1, 1), D3DXVECTOR4(1, 1, 1, 1));
+}
+
+
+void SpriteBatch::DrawString(SpriteFont* p_pFont,  char* p_pText, float p_X, float p_Y, float p_Height, D3DXVECTOR4 p_Color)
+{
+	int _LetterCount = strlen(p_pText);
+
+	float _XAdvance = 0;
+
+	for (int x = 0; x < _LetterCount; x++)
+	{
+		// Einen Buchstaben Zeichnen
+
+		// Bei Leerzeichen einfach nur etwas weiter gehen und nichts zeichnen
+		if (p_pText[x] == ' ')
+		{
+			_XAdvance += 10;
+			continue;
+		}
+
+
+		int _CharID = p_pText[x];
+
+		if (_CharID < 0)
+			_CharID += 256;
+
+		CharDescription _Desc = p_pFont->m_Chars[_CharID];
+
+		// Schritt 1 Destination Rect
+
+		Rect _Destination(p_X + _XAdvance,
+			p_Y + _Desc.RelativeOffsetY * p_Height,
+			_Desc.RelativeWidth * p_Height,
+			_Desc.RelativeHeight * p_Height);
+
+		// Schritt 2 Source Rectangle
+		Rect _Source(_Desc.m_X / 256.0f, _Desc.m_Y / 256.0f, _Desc.m_Width / 256.0f, _Desc.m_Height / 256.0f);
+
+		// Schritt 3 In X-Richtung weiter gehen
+		_XAdvance += _Desc.RelativeWidth * p_Height;
+
+
+		// Schritt 4 Draw Texture
+		DrawTexture(p_pFont->m_pSpriteSheet, _Destination, _Source, p_Color);
+
+	}
+
 }
 

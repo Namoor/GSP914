@@ -4,6 +4,8 @@
 
 #include "Rect.h"
 
+#include "SpriteFont.h"
+
 class SpriteBatch
 {
 public:
@@ -19,6 +21,8 @@ public:
 	void DrawTexture(ID3D11ShaderResourceView* p_pTexture, Rect Destination, Rect Source);
 	void DrawTexture(ID3D11ShaderResourceView* p_pTexture, Rect Destination, D3DXVECTOR4 p_Color);
 	void DrawTexture(ID3D11ShaderResourceView* p_pTexture, Rect Destination);
+
+	void DrawString(SpriteFont* p_pFont, char* p_pText, float p_X, float p_Y, float p_Height, D3DXVECTOR4 p_Color);
 
 private:
 	SpriteBatch_Vertex* m_pVertices;
@@ -40,4 +44,6 @@ private:
 	ID3D11DeviceContext* m_pDevCon;
 
 	ID3D11ShaderResourceView* m_pCurrentTexture;
+
+	ID3D11BlendState* m_pBlendState;
 };
