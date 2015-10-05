@@ -85,6 +85,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="2DScene.cpp" />
+    <ClCompile Include="3DScene.cpp" />
+    <ClCompile Include="Cube.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Rect.cpp" />
@@ -95,6 +97,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="2DScene.h" />
+    <ClInclude Include="3DScene.h" />
+    <ClInclude Include="Cube.h" />
     <ClInclude Include="d3dinclude.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="IScene.h" />
@@ -107,6 +111,12 @@
     <ClInclude Include="VertexStruct.h" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="CubeShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </FxCompile>
     <FxCompile Include="SpriteBatch.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>

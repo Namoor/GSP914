@@ -34,6 +34,12 @@
     <Filter Include="Quelldateien\Timer">
       <UniqueIdentifier>{b329e0bd-ec8f-49f1-acf0-abbecdaf579c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Scene\3DScene">
+      <UniqueIdentifier>{f24216f4-51c4-4f1b-87c4-d583cbe8e7d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Scene\3DScene\Würfel">
+      <UniqueIdentifier>{83b6242d-4098-474b-a91e-f625758e0f71}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -59,6 +65,12 @@
     </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>Quelldateien\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="3DScene.cpp">
+      <Filter>Quelldateien\Scene\3DScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Cube.cpp">
+      <Filter>Quelldateien\Scene\3DScene\Würfel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -95,6 +107,12 @@
     <ClInclude Include="Timer.h">
       <Filter>Quelldateien\Timer</Filter>
     </ClInclude>
+    <ClInclude Include="3DScene.h">
+      <Filter>Quelldateien\Scene\3DScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube.h">
+      <Filter>Quelldateien\Scene\3DScene\Würfel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="UnserErsterShader.hlsl">
@@ -102,6 +120,9 @@
     </FxCompile>
     <FxCompile Include="SpriteBatch.hlsl">
       <Filter>Quelldateien\SpriteBatch</Filter>
+    </FxCompile>
+    <FxCompile Include="CubeShader.hlsl">
+      <Filter>Quelldateien\Scene\3DScene\Würfel</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

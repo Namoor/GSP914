@@ -35,6 +35,8 @@ void Scene2D::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 	m_pFont = new SpriteFont();
 
 	m_pFont->Load("Calibri.fnt", m_pDevice);
+
+	
 }
 
 void Scene2D::Update(float p_DeltaTime)
