@@ -86,6 +86,7 @@
   <ItemGroup>
     <ClCompile Include="2DScene.cpp" />
     <ClCompile Include="3DScene.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -98,7 +99,9 @@
   <ItemGroup>
     <ClInclude Include="2DScene.h" />
     <ClInclude Include="3DScene.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Cube.h" />
+    <ClInclude Include="Cube_Vertex.h" />
     <ClInclude Include="d3dinclude.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="IScene.h" />

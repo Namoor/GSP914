@@ -3,6 +3,8 @@
 #include "IScene.h"
 
 #include "Cube.h"
+#include "Camera.h"
+#include "Input.h"
 
 class Scene3D : public IScene
 {
@@ -24,4 +26,6 @@ private:
 
 private:
 	Cube* m_pCube;
+	Camera* m_pCamera;
+	Input* m_pInput;
 };

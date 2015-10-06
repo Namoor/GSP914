@@ -2,13 +2,15 @@
 
 #include "d3dinclude.h"
 
+#include "Camera.h"
+
 class Cube
 {
 public:
 
 	void Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon);
 
-	void Update(float DeltaTime);
+	void Update(float DeltaTime, Camera* p_pCamera);
 
 	void Render();
 

@@ -40,6 +40,9 @@
     <Filter Include="Quelldateien\Scene\3DScene\Würfel">
       <UniqueIdentifier>{83b6242d-4098-474b-a91e-f625758e0f71}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Camera">
+      <UniqueIdentifier>{050ccb8f-6e88-414f-a50d-282198fa3166}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -71,6 +74,9 @@
     </ClCompile>
     <ClCompile Include="Cube.cpp">
       <Filter>Quelldateien\Scene\3DScene\Würfel</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Quelldateien\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +118,12 @@
     </ClInclude>
     <ClInclude Include="Cube.h">
       <Filter>Quelldateien\Scene\3DScene\Würfel</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube_Vertex.h">
+      <Filter>Quelldateien\Scene\3DScene\Würfel</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Quelldateien\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
