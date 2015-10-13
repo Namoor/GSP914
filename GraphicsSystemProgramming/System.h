@@ -4,6 +4,8 @@
 
 #include "IScene.h"
 
+#include "Timer.h"
+
 class System
 {
 public:
@@ -23,4 +25,7 @@ private:
 	IDXGISwapChain* m_pSwapChain;
 
 	ID3D11RenderTargetView* m_pBackBuffer;
+	ID3D11DepthStencilView* m_pDepthStencilView;
+
+	Timer* m_pTimer;
 };

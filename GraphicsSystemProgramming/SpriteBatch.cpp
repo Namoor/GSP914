@@ -1,6 +1,6 @@
 #include "SpriteBatch.h"
 
-#define BATCHSIZE 1000
+#define BATCHSIZE 10000
 
 SpriteBatch::SpriteBatch()
 {
@@ -14,6 +14,8 @@ SpriteBatch::SpriteBatch()
 
 	m_pIndexBuffer = nullptr;
 	m_pVertexBuffer = nullptr;
+
+	m_pCurrentTexture = nullptr;
 }
 
 void SpriteBatch::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pContext)
@@ -125,6 +127,26 @@ void SpriteBatch::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pContext)
 	m_pDevice->CreateInputLayout(_IED, 3, _pVertexShader->GetBufferPointer(),
 		_pVertexShader->GetBufferSize(), &m_pInputLayout);
 
+	D3D11_BLEND_DESC _BDesc;
+	ZeroMemory(&_BDesc, sizeof(_BDesc));
+
+	_BDesc.AlphaToCoverageEnable = false;
+	_BDesc.IndependentBlendEnable = false;
+
+	_BDesc.RenderTarget[0].BlendEnable = true;
+	_BDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+	_BDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP::D3D11_BLEND_OP_ADD;
+	_BDesc.RenderTarget[0].SrcBlend = D3D11_BLEND::D3D11_BLEND_SRC_ALPHA;
+	_BDesc.RenderTarget[0].DestBlend = D3D11_BLEND::D3D11_BLEND_INV_SRC_ALPHA;
+
+
+	_BDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP::D3D11_BLEND_OP_ADD;
+	_BDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND::D3D11_BLEND_SRC_ALPHA;
+	_BDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND::D3D11_BLEND_INV_SRC_ALPHA;
+
+	m_pDevice->CreateBlendState(&_BDesc, &m_pBlendState);
+
 }
 
 void SpriteBatch::Begin()
@@ -134,6 +156,9 @@ void SpriteBatch::Begin()
 
 void SpriteBatch::End()
 {
+	if (m_DrawCallCount == 0)
+		return;
+
 	// Daten von m_pVertices auf die Grafikkarte kopieren (m_pVertexBuffer)
 	D3D11_MAPPED_SUBRESOURCE _MSR;
 
@@ -143,6 +168,10 @@ void SpriteBatch::End()
 
 
 	// States setzen
+	m_pDevCon->PSSetShaderResources(0, 1, &m_pCurrentTexture);
+
+	m_pDevCon->OMSetBlendState(m_pBlendState, nullptr, 0xFFFFFFFF);
+	
 	m_pDevCon->PSSetShader(m_pPixelShader, nullptr, 0);
 	m_pDevCon->VSSetShader(m_pVertexShader, nullptr, 0);
 
@@ -160,6 +189,13 @@ void SpriteBatch::End()
 
 void SpriteBatch::DrawTexture(ID3D11ShaderResourceView* p_pSRV, Rect Destination, Rect Source, D3DXVECTOR4 Color)
 {
+	if (p_pSRV != m_pCurrentTexture)
+	{
+		End();
+		Begin();
+		m_pCurrentTexture = p_pSRV;
+	}
+
 	float _PosXStart = Destination.x / m_ScreenWidth * 2 - 1;
 	float _PosXEnd = (Destination.x + Destination.width) / m_ScreenWidth * 2 - 1;
 	float _PosYStart = -1 * (Destination.y / m_ScreenHeight * 2 - 1);
@@ -179,10 +215,15 @@ void SpriteBatch::DrawTexture(ID3D11ShaderResourceView* p_pSRV, Rect Destination
 	m_pVertices[m_DrawCallCount * 4 + 2].Color = Color;
 	m_pVertices[m_DrawCallCount * 4 + 3].Color = Color;
 
-	m_pVertices[m_DrawCallCount * 4 + 0].TexCoord = D3DXVECTOR2(0, 1);
-	m_pVertices[m_DrawCallCount * 4 + 1].TexCoord = D3DXVECTOR2(0, 0);
-	m_pVertices[m_DrawCallCount * 4 + 2].TexCoord = D3DXVECTOR2(1, 0);
-	m_pVertices[m_DrawCallCount * 4 + 3].TexCoord = D3DXVECTOR2(1, 1);
+	float _UVXStart = Source.x;
+	float _UVXEnd = Source.x + Source.width;
+	float _UVYStart = Source.y;
+	float _UVYEnd = Source.y + Source.height;
+
+	m_pVertices[m_DrawCallCount * 4 + 0].TexCoord = D3DXVECTOR2(_UVXStart, _UVYEnd);
+	m_pVertices[m_DrawCallCount * 4 + 1].TexCoord = D3DXVECTOR2(_UVXStart, _UVYStart);
+	m_pVertices[m_DrawCallCount * 4 + 2].TexCoord = D3DXVECTOR2(_UVXEnd, _UVYStart);
+	m_pVertices[m_DrawCallCount * 4 + 3].TexCoord = D3DXVECTOR2(_UVXEnd, _UVYEnd);
 
 
 	m_DrawCallCount++;
@@ -194,4 +235,66 @@ void SpriteBatch::DrawTexture(ID3D11ShaderResourceView* p_pSRV, Rect Destination
 	}
 }
 
+
+void SpriteBatch::DrawTexture(ID3D11ShaderResourceView* p_pTexture, Rect Destination, Rect Source)
+{
+	DrawTexture(p_pTexture, Destination, Source, D3DXVECTOR4(1, 1, 1, 1));
+}
+
+void SpriteBatch::DrawTexture(ID3D11ShaderResourceView* p_pTexture, Rect Destination, D3DXVECTOR4 p_Color)
+{
+	DrawTexture(p_pTexture, Destination, Rect(0, 0, 1, 1), p_Color);
+}
+
+void SpriteBatch::DrawTexture(ID3D11ShaderResourceView* p_pTexture, Rect Destination)
+{
+	DrawTexture(p_pTexture, Destination, Rect(0, 0, 1, 1), D3DXVECTOR4(1, 1, 1, 1));
+}
+
+
+void SpriteBatch::DrawString(SpriteFont* p_pFont,  char* p_pText, float p_X, float p_Y, float p_Height, D3DXVECTOR4 p_Color)
+{
+	int _LetterCount = strlen(p_pText);
+
+	float _XAdvance = 0;
+
+	for (int x = 0; x < _LetterCount; x++)
+	{
+		// Einen Buchstaben Zeichnen
+
+		// Bei Leerzeichen einfach nur etwas weiter gehen und nichts zeichnen
+		if (p_pText[x] == ' ')
+		{
+			_XAdvance += 10;
+			continue;
+		}
+
+
+		int _CharID = p_pText[x];
+
+		if (_CharID < 0)
+			_CharID += 256;
+
+		CharDescription _Desc = p_pFont->m_Chars[_CharID];
+
+		// Schritt 1 Destination Rect
+
+		Rect _Destination(p_X + _XAdvance,
+			p_Y + _Desc.RelativeOffsetY * p_Height,
+			_Desc.RelativeWidth * p_Height,
+			_Desc.RelativeHeight * p_Height);
+
+		// Schritt 2 Source Rectangle
+		Rect _Source(_Desc.m_X / 256.0f, _Desc.m_Y / 256.0f, _Desc.m_Width / 256.0f, _Desc.m_Height / 256.0f);
+
+		// Schritt 3 In X-Richtung weiter gehen
+		_XAdvance += _Desc.RelativeWidth * p_Height;
+
+
+		// Schritt 4 Draw Texture
+		DrawTexture(p_pFont->m_pSpriteSheet, _Destination, _Source, p_Color);
+
+	}
+
+}
 
