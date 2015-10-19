@@ -165,7 +165,7 @@ void SpriteBatch::End()
 	m_pDevCon->Map(m_pVertexBuffer, 0, D3D11_MAP::D3D11_MAP_WRITE_DISCARD, 0, &_MSR);
 	memcpy(_MSR.pData, m_pVertices, m_DrawCallCount * 4 * sizeof(SpriteBatch_Vertex));
 	m_pDevCon->Unmap(m_pVertexBuffer, 0);
-
+		
 
 	// States setzen
 	m_pDevCon->PSSetShaderResources(0, 1, &m_pCurrentTexture);
@@ -252,7 +252,7 @@ void SpriteBatch::DrawTexture(ID3D11ShaderResourceView* p_pTexture, Rect Destina
 }
 
 
-void SpriteBatch::DrawString(SpriteFont* p_pFont,  char* p_pText, float p_X, float p_Y, float p_Height, D3DXVECTOR4 p_Color)
+void SpriteBatch::DrawString(SpriteFont* p_pFont, const char* p_pText, float p_X, float p_Y, float p_Height, D3DXVECTOR4 p_Color)
 {
 	int _LetterCount = strlen(p_pText);
 

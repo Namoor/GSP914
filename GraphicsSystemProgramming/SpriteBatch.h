@@ -22,7 +22,7 @@ public:
 	void DrawTexture(ID3D11ShaderResourceView* p_pTexture, Rect Destination, D3DXVECTOR4 p_Color);
 	void DrawTexture(ID3D11ShaderResourceView* p_pTexture, Rect Destination);
 
-	void DrawString(SpriteFont* p_pFont, char* p_pText, float p_X, float p_Y, float p_Height, D3DXVECTOR4 p_Color);
+	void DrawString(SpriteFont* p_pFont,const char* p_pText, float p_X, float p_Y, float p_Height, D3DXVECTOR4 p_Color);
 
 private:
 	SpriteBatch_Vertex* m_pVertices;

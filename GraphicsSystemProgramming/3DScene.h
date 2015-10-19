@@ -6,6 +6,15 @@
 #include "Camera.h"
 #include "Input.h"
 
+#include "SpriteBatch.h"
+#include "SpriteFont.h"
+
+#include <list>
+#include "GameObject.h"
+
+#include "TexturedMaterial.h"
+#include "TexturedNormMaterial.h"
+
 class Scene3D : public IScene
 {
 public:
@@ -28,4 +37,17 @@ private:
 	Cube* m_pCube;
 	Camera* m_pCamera;
 	Input* m_pInput;
+
+	SpriteBatch* m_pSpriteBatch;
+	SpriteFont* m_pCalibriFont;
+
+	int FramesSinceLastSecond;
+	float TimeSinceLastSecond;
+
+	int CurrentFPS;
+private:
+	TexturedMaterial* m_pTextureMaterial;
+	TexturedNormMaterial* m_pTextureNormMaterial;
+
+	std::list<GameObject*> m_Objects;
 };

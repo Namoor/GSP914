@@ -43,6 +43,24 @@
     <Filter Include="Quelldateien\Camera">
       <UniqueIdentifier>{050ccb8f-6e88-414f-a50d-282198fa3166}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Scene\3DScene\Material">
+      <UniqueIdentifier>{4fc79a2b-1cb4-426a-8e0d-3aa221e94a16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Scene\3DScene\Mesh">
+      <UniqueIdentifier>{de42c58f-85d8-4651-aa9f-ba8eede3a084}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Scene\3DScene\Transform">
+      <UniqueIdentifier>{0c3c8617-1ee2-4394-b968-fe7e7605ff6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Scene\3DScene\GameObject">
+      <UniqueIdentifier>{c41bd839-04a4-425f-ae7c-a4be1b2c28da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Scene\3DScene\Material\TexturedMaterial">
+      <UniqueIdentifier>{d5b50dd2-2767-45bd-9129-a37f7a68671e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Scene\3DScene\Material\TexturedNormMaterial">
+      <UniqueIdentifier>{840cdceb-562a-4068-a5e3-d8ab8c5ebe26}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -77,6 +95,24 @@
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Quelldateien\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Quelldateien\Scene\3DScene\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Quelldateien\Scene\3DScene\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Quelldateien\Scene\3DScene\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="TexturedMaterial.cpp">
+      <Filter>Quelldateien\Scene\3DScene\Material\TexturedMaterial</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Quelldateien\Scene\3DScene\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="TexturedNormMaterial.cpp">
+      <Filter>Quelldateien\Scene\3DScene\Material\TexturedNormMaterial</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -125,6 +161,24 @@
     <ClInclude Include="Camera.h">
       <Filter>Quelldateien\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Quelldateien\Scene\3DScene\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Quelldateien\Scene\3DScene\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Quelldateien\Scene\3DScene\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="TexturedMaterial.h">
+      <Filter>Quelldateien\Scene\3DScene\Material\TexturedMaterial</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Quelldateien\Scene\3DScene\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="TexturedNormMaterial.h">
+      <Filter>Quelldateien\Scene\3DScene\Material\TexturedNormMaterial</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="UnserErsterShader.hlsl">
@@ -134,7 +188,10 @@
       <Filter>Quelldateien\SpriteBatch</Filter>
     </FxCompile>
     <FxCompile Include="CubeShader.hlsl">
-      <Filter>Quelldateien\Scene\3DScene\Würfel</Filter>
+      <Filter>Quelldateien\Scene\3DScene\Material\TexturedMaterial</Filter>
+    </FxCompile>
+    <FxCompile Include="TexturedNormShader.hlsl">
+      <Filter>Quelldateien\Scene\3DScene\Material\TexturedNormMaterial</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

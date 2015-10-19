@@ -54,6 +54,7 @@ void System::Run(IScene* p_pScene)
 		_Color[3] = 1;
 
 		m_pDeviceContext->ClearRenderTargetView(m_pBackBuffer, _Color);
+		m_pDeviceContext->ClearDepthStencilView(m_pDepthStencilView, D3D11_CLEAR_FLAG::D3D11_CLEAR_DEPTH, 1.0f, 0);
 
 
 		m_pScene->Update(m_pTimer->GetDeltaTime());
@@ -152,12 +153,53 @@ void System::InitGraphics()
 	// ID3D11ShaderResourceView : Objekt um aus der Textur zu lesen
 	// ID3D11RenderTargetView : Objekt um in die Textur zu schreiben
 
+	// BackBuffer (Farbinformation des "Bildes")
 	ID3D11Texture2D* m_pBackbufferTexture = nullptr;
 	m_pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&m_pBackbufferTexture);
 
 	m_pDevice->CreateRenderTargetView(m_pBackbufferTexture, nullptr, &m_pBackBuffer);
 
-	m_pDeviceContext->OMSetRenderTargets(1, &m_pBackBuffer, nullptr);
+
+
+
+	// DepthBuffer (Tiefeninformation des "Bildes")
+
+
+	ID3D11Texture2D* _pDepthBuffer = nullptr;
+
+	D3D11_TEXTURE2D_DESC _DBDesc;
+	ZeroMemory(&_DBDesc, sizeof(_DBDesc));
+
+	_DBDesc.ArraySize = 1;
+	_DBDesc.MipLevels = 1;
+	_DBDesc.Height = 600;
+	_DBDesc.Width = 800;
+	_DBDesc.SampleDesc.Count = 4;
+
+	_DBDesc.Format = DXGI_FORMAT::DXGI_FORMAT_D32_FLOAT;
+	_DBDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL;
+
+
+
+	m_pDevice->CreateTexture2D(&_DBDesc, nullptr, &_pDepthBuffer);
+
+	D3D11_DEPTH_STENCIL_VIEW_DESC _DSVDesc;
+	ZeroMemory(&_DSVDesc, sizeof(_DSVDesc));
+
+	_DSVDesc.ViewDimension = D3D11_DSV_DIMENSION::D3D11_DSV_DIMENSION_TEXTURE2DMS;
+	_DSVDesc.Format = DXGI_FORMAT::DXGI_FORMAT_D32_FLOAT;
+	
+
+	m_pDevice->CreateDepthStencilView(_pDepthBuffer, &_DSVDesc, &m_pDepthStencilView);
+
+
+
+
+
+
+	m_pDeviceContext->OMSetRenderTargets(1, &m_pBackBuffer, m_pDepthStencilView);
+
+
 
 	D3D11_VIEWPORT _Viewport;
 
