@@ -44,7 +44,6 @@
       <UniqueIdentifier>{050ccb8f-6e88-414f-a50d-282198fa3166}</UniqueIdentifier>
     </Filter>
     <Filter Include="Quelldateien\Scene\3DScene\Material">
-<<<<<<< HEAD
       <UniqueIdentifier>{4fc79a2b-1cb4-426a-8e0d-3aa221e94a16}</UniqueIdentifier>
     </Filter>
     <Filter Include="Quelldateien\Scene\3DScene\Mesh">
@@ -61,9 +60,9 @@
     </Filter>
     <Filter Include="Quelldateien\Scene\3DScene\Material\TexturedNormMaterial">
       <UniqueIdentifier>{840cdceb-562a-4068-a5e3-d8ab8c5ebe26}</UniqueIdentifier>
-=======
-      <UniqueIdentifier>{718aa62d-754b-481c-9595-1e1b423880a2}</UniqueIdentifier>
->>>>>>> 942773305c7e7f345f8eb51ce652ba998b8abf90
+    </Filter>
+    <Filter Include="Quelldateien\Scene\3DScene\ObjMesh">
+      <UniqueIdentifier>{19c4b8c9-cd21-4258-b98d-8d94d3859ff0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -100,7 +99,6 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Quelldateien\Camera</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="Mesh.cpp">
       <Filter>Quelldateien\Scene\3DScene\Mesh</Filter>
     </ClCompile>
@@ -119,11 +117,9 @@
     <ClCompile Include="TexturedNormMaterial.cpp">
       <Filter>Quelldateien\Scene\3DScene\Material\TexturedNormMaterial</Filter>
     </ClCompile>
-=======
-    <ClCompile Include="Material.cpp">
-      <Filter>Quelldateien\Scene\3DScene\Material</Filter>
+    <ClCompile Include="ObjMesh.cpp">
+      <Filter>Quelldateien\Scene\3DScene\ObjMesh</Filter>
     </ClCompile>
->>>>>>> 942773305c7e7f345f8eb51ce652ba998b8abf90
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IScene.h">
@@ -171,7 +167,6 @@
     <ClInclude Include="Camera.h">
       <Filter>Quelldateien\Camera</Filter>
     </ClInclude>
-<<<<<<< HEAD
     <ClInclude Include="Mesh.h">
       <Filter>Quelldateien\Scene\3DScene\Mesh</Filter>
     </ClInclude>
@@ -190,11 +185,12 @@
     <ClInclude Include="TexturedNormMaterial.h">
       <Filter>Quelldateien\Scene\3DScene\Material\TexturedNormMaterial</Filter>
     </ClInclude>
-=======
-    <ClInclude Include="Material.h">
-      <Filter>Quelldateien\Scene\3DScene\Material</Filter>
+    <ClInclude Include="ObjMesh.h">
+      <Filter>Quelldateien\Scene\3DScene\ObjMesh</Filter>
     </ClInclude>
->>>>>>> 942773305c7e7f345f8eb51ce652ba998b8abf90
+    <ClInclude Include="ObjMesh_VertexStruct.h">
+      <Filter>Quelldateien\Scene\3DScene\ObjMesh</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="UnserErsterShader.hlsl">

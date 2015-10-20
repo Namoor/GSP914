@@ -15,6 +15,8 @@
 #include "TexturedMaterial.h"
 #include "TexturedNormMaterial.h"
 
+#include "ObjMesh.h"
+
 class Scene3D : public IScene
 {
 public:
@@ -35,6 +37,7 @@ private:
 
 private:
 	Cube* m_pCube;
+	ObjMesh* m_pObjMesh;
 	Camera* m_pCamera;
 	Input* m_pInput;
 

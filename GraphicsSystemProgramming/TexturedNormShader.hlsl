@@ -31,5 +31,5 @@ float4 PShader(VertexShaderOut _In) : SV_TARGET
 	float LightIntensity = 0.3 + 0.7 * saturate(dot(_In.normal, normalize(float3(-2, 3, -1))));
 	float4 _Tex = gTexture.Sample(gSampler, _In.uv) * _In.col;
 
-		return float4(_Tex.rgb * LightIntensity, _Tex.a);
+		return float4(float3(1,1,1) * LightIntensity, _Tex.a);
 }

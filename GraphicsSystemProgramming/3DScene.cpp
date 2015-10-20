@@ -22,6 +22,9 @@ void Scene3D::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 	m_pCube = new Cube();
 	m_pCube->Init(p_pDevice, p_pDevCon);
 
+	m_pObjMesh = new ObjMesh();
+	m_pObjMesh->Init(p_pDevice, p_pDevCon, "duck_triangulated_10k.obj");
+
 	m_pCamera = new Camera();
 
 	m_pInput = new Input();
@@ -51,7 +54,7 @@ void Scene3D::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 			{
 				if (rand() % 2 > 0)
 				{
-					GameObject* _pGameObject = new GameObject(m_pCube, m_pTextureMaterial);
+					GameObject* _pGameObject = new GameObject(m_pObjMesh, m_pTextureMaterial);
 
 					_pGameObject->m_pTransform->SetPosition(D3DXVECTOR3(x, y, z) * 1.0f);
 
@@ -107,6 +110,7 @@ void Scene3D::Render()
 
 	for (auto _It = m_Objects.begin(); _It != m_Objects.end(); _It++)
 	{
+		break;
 		(*_It)->Render(m_pCamera);
 	}
 

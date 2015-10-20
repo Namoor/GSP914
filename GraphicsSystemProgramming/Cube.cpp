@@ -4,23 +4,7 @@
 
 void Cube::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 {
-<<<<<<< HEAD
 	Mesh::Init(p_pDevice, p_pDevCon, 24, 36, sizeof(Cube_Vertex));
-=======
-	m_pDevice = p_pDevice;
-	m_pDevCon = p_pDevCon;
-
-	// VertexBuffer
-	D3D11_BUFFER_DESC _VBDesc;
-	ZeroMemory(&_VBDesc, sizeof(_VBDesc));
-
-	_VBDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_VERTEX_BUFFER;
-	_VBDesc.ByteWidth = sizeof(Cube_Vertex) * 24;
-	_VBDesc.CPUAccessFlags = D3D11_CPU_ACCESS_FLAG::D3D11_CPU_ACCESS_WRITE;
-	_VBDesc.Usage = D3D11_USAGE::D3D11_USAGE_DYNAMIC;
-
-	m_pDevice->CreateBuffer(&_VBDesc, nullptr, &m_pVertexBuffer);
->>>>>>> 942773305c7e7f345f8eb51ce652ba998b8abf90
 
 	Cube_Vertex _Vertices[24];
 
@@ -210,49 +194,6 @@ void Cube::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 	_Indices[34] = 22;
 	_Indices[35] = 23;
 
-<<<<<<< HEAD
 	SetVertexData(&_Vertices);
 	SetIndexData(&_Indices);
-=======
-	D3D11_MAPPED_SUBRESOURCE _IBM;
-
-	m_pDevCon->Map(m_pIndexBuffer, 0, D3D11_MAP::D3D11_MAP_WRITE_DISCARD, 0, &_IBM);
-	memcpy(_IBM.pData, _Indices, sizeof(int) * 36);
-	m_pDevCon->Unmap(m_pIndexBuffer, 0);
-
-
-
-
-	m_pMaterial = new Material();
-	m_pMaterial->Init(m_pDevice, m_pDevCon);
-}
-
-
-
-void Cube::Update(float p_DeltaTime, Camera* p_pCamera)
-{
-	m_pMaterial->Update(p_DeltaTime, p_pCamera);
-
-
-}
-
-void Cube::Render()
-{
-	UINT _Offset = 0;
-	UINT _Stride = sizeof(Cube_Vertex);
-
-	m_pDevCon->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &_Stride, &_Offset);
-	m_pDevCon->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT::DXGI_FORMAT_R32_UINT, 0);
-	m_pDevCon->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-
-
-
-
-
-
-	m_pMaterial->Bind();
-
-	m_pDevCon->DrawIndexed(36, 0, 0);
->>>>>>> 942773305c7e7f345f8eb51ce652ba998b8abf90
 }

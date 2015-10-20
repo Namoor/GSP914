@@ -1,0 +1,23 @@
+
+v   // Vertice (Vector3 für eine Position)
+vt  // TexturC (V2 für eine UVCoordinate)
+vn  // Normal  (Vector3 für eine Normal)
+f   // Dreieck (3 * eine VertexGruppe)
+
+
+v 0.0 0.0 0.0 // V0
+v 1.0 0.0 0.0 // V1
+v 1.0 0.0 1.0 // V2
+v 0.0 0.0 1.0 // V3
+
+vt 0.0 0.0 // UV0
+vt 1.0 0.0 // UV1
+vt 1.0 1.0 // UV2
+vt 0.0 1.0 // UV3
+
+vn 0.0 1.0 0.0 // N0 
+
+f 0/0/0 1/1/0 2/2/0
+f 0/0/0 2/2/0 3/3/0
+
+

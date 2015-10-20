@@ -92,11 +92,9 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Material.cpp" />
-<<<<<<< HEAD
+    <ClCompile Include="ObjMesh.cpp" />
     <ClCompile Include="TexturedMaterial.cpp" />
     <ClCompile Include="Mesh.cpp" />
-=======
->>>>>>> 942773305c7e7f345f8eb51ce652ba998b8abf90
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="SpriteBatch.cpp" />
     <ClCompile Include="SpriteFont.cpp" />
@@ -116,11 +114,10 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="IScene.h" />
     <ClInclude Include="Material.h" />
-<<<<<<< HEAD
+    <ClInclude Include="ObjMesh.h" />
+    <ClInclude Include="ObjMesh_VertexStruct.h" />
     <ClInclude Include="TexturedMaterial.h" />
     <ClInclude Include="Mesh.h" />
-=======
->>>>>>> 942773305c7e7f345f8eb51ce652ba998b8abf90
     <ClInclude Include="Rect.h" />
     <ClInclude Include="SpriteBatch.h" />
     <ClInclude Include="SpriteBatch_Vertex.h" />
