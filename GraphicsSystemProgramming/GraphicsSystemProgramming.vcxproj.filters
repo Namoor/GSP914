@@ -64,6 +64,12 @@
     <Filter Include="Quelldateien\Scene\3DScene\ObjMesh">
       <UniqueIdentifier>{19c4b8c9-cd21-4258-b98d-8d94d3859ff0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Scene\3DScene\ParticleSystem">
+      <UniqueIdentifier>{1775afae-7780-4d36-8df5-dd9a333853ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Scene\3DScene\VoxelChunk">
+      <UniqueIdentifier>{2dcd8455-eb46-4052-86b0-562263b69878}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -119,6 +125,12 @@
     </ClCompile>
     <ClCompile Include="ObjMesh.cpp">
       <Filter>Quelldateien\Scene\3DScene\ObjMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>Quelldateien\Scene\3DScene\ParticleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Chunk.cpp">
+      <Filter>Quelldateien\Scene\3DScene\VoxelChunk</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -191,6 +203,18 @@
     <ClInclude Include="ObjMesh_VertexStruct.h">
       <Filter>Quelldateien\Scene\3DScene\ObjMesh</Filter>
     </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Quelldateien\Scene\3DScene\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystem.h">
+      <Filter>Quelldateien\Scene\3DScene\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Chunk.h">
+      <Filter>Quelldateien\Scene\3DScene\VoxelChunk</Filter>
+    </ClInclude>
+    <ClInclude Include="Chunk_Structs.h">
+      <Filter>Quelldateien\Scene\3DScene\VoxelChunk</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="UnserErsterShader.hlsl">
@@ -204,6 +228,9 @@
     </FxCompile>
     <FxCompile Include="TexturedNormShader.hlsl">
       <Filter>Quelldateien\Scene\3DScene\Material\TexturedNormMaterial</Filter>
+    </FxCompile>
+    <FxCompile Include="ParticleShader.hlsl">
+      <Filter>Quelldateien\Scene\3DScene\ParticleSystem</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

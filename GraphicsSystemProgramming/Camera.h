@@ -13,6 +13,7 @@ public:
 	~Camera();
 
 public:
+	D3DXVECTOR4 GetPosition4();
 	D3DXMATRIX GetViewMatrix();
 	D3DXMATRIX GetProjMatrix();
 
@@ -24,6 +25,8 @@ public:
 	void RotateZ(float p_Degree, bool IsInWorldSpace);
 
 
+	D3DXVECTOR4 GetRight4();
+	D3DXVECTOR4 GetUp4();
 private:
 	void UpdateViewMatrix();
 	

@@ -32,6 +32,37 @@ D3DXMATRIX Camera::GetViewMatrix()
 	return m_View;
 }
 
+D3DXVECTOR4 Camera::GetPosition4()
+{
+	D3DXVECTOR3 _CameraPosition = m_Target - m_Direction * m_Distance;
+
+	D3DXVECTOR4 _Pos;
+	_Pos.x = _CameraPosition.x;
+	_Pos.y = _CameraPosition.y;
+	_Pos.z = _CameraPosition.z;
+	return _Pos;
+}
+
+
+D3DXVECTOR4 Camera::GetUp4()
+{
+	D3DXVECTOR4 _Pos;
+	_Pos.x = m_Up.x;
+	_Pos.y = m_Up.y;
+	_Pos.z = m_Up.z;
+	return _Pos;
+}
+
+
+D3DXVECTOR4 Camera::GetRight4()
+{
+	D3DXVECTOR4 _Pos;
+	_Pos.x = m_Right.x;
+	_Pos.y = m_Right.y;
+	_Pos.z = m_Right.z;
+	return _Pos;
+}
+
 D3DXMATRIX Camera::GetProjMatrix()
 {
 	return m_Projection;

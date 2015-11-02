@@ -17,6 +17,10 @@
 
 #include "ObjMesh.h"
 
+#include "ParticleSystem.h"
+
+#include "Chunk.h"
+
 class Scene3D : public IScene
 {
 public:
@@ -48,6 +52,10 @@ private:
 	float TimeSinceLastSecond;
 
 	int CurrentFPS;
+
+	ParticleSystem* m_pParticleSystem;
+
+	Chunk* m_pChunk;
 private:
 	TexturedMaterial* m_pTextureMaterial;
 	TexturedNormMaterial* m_pTextureNormMaterial;

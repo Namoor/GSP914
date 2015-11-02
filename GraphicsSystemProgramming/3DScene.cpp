@@ -22,6 +22,9 @@ void Scene3D::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 	m_pCube = new Cube();
 	m_pCube->Init(p_pDevice, p_pDevCon);
 
+	m_pParticleSystem = new ParticleSystem();
+	m_pParticleSystem->Init(m_pDevice, m_pDevCon);
+
 	m_pObjMesh = new ObjMesh();
 	m_pObjMesh->Init(p_pDevice, p_pDevCon, "duck_triangulated_10k.obj");
 
@@ -46,7 +49,7 @@ void Scene3D::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 	CurrentFPS = 0;
 
 
-	int max = 10;
+	int max = 32;
 
 	for (int x = 0; x < max; x++)
 		for (int y = 0; y < max; y++)
@@ -54,14 +57,17 @@ void Scene3D::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 			{
 				if (rand() % 2 > 0)
 				{
-					GameObject* _pGameObject = new GameObject(m_pObjMesh, m_pTextureMaterial);
+					GameObject* _pGameObject = new GameObject(m_pCube, m_pTextureMaterial);
 
 					_pGameObject->m_pTransform->SetPosition(D3DXVECTOR3(x, y, z) * 1.0f);
+					//_pGameObject->m_pTransform->SetScale(D3DXVECTOR3(0.02f, 0.02f, 0.02f));
 
 					m_Objects.push_back(_pGameObject);
 				}
 			}
 
+	m_pChunk = new Chunk();
+	m_pChunk->Init(m_pDevice, m_pDevCon);
 }
 
 void Scene3D::Update(float p_DeltaTime)
@@ -71,6 +77,15 @@ void Scene3D::Update(float p_DeltaTime)
 
 	TimeSinceLastSecond += p_DeltaTime;
 	FramesSinceLastSecond += 1;
+
+	m_pParticleSystem->Update(p_DeltaTime);
+
+	D3DXVECTOR3 _RndVec = D3DXVECTOR3(rand() % 2000 / 1000.0f - 1.0f, 1, rand() % 2000 / 1000.0f -1.0f);
+	D3DXVec3Normalize(&_RndVec, &_RndVec);
+
+	D3DXVECTOR4 _RndVec4 = D3DXVECTOR4(_RndVec.x *0.5f + 0.5f, _RndVec.y *0.5f + 0.5f, _RndVec.z *0.5f + 0.5f, 0.1f);
+
+	//m_pParticleSystem->SpawnParticle(_RndVec, _RndVec, _RndVec4);
 
 	if (TimeSinceLastSecond > 1)
 	{
@@ -110,9 +125,11 @@ void Scene3D::Render()
 
 	for (auto _It = m_Objects.begin(); _It != m_Objects.end(); _It++)
 	{
-		break;
 		(*_It)->Render(m_pCamera);
+		
 	}
+
+	m_pParticleSystem->Render(m_pCamera);
 
 	m_pSpriteBatch->Begin();
 

@@ -135,11 +135,11 @@ void ObjMesh::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon, char
 		int VT = _Vertices[x].VT - 1;
 		if (VT >= _VT.size())
 			VT = _VT.size() - 1;
-
+		
 		int VN = _Vertices[x].VN - 1;
 		if (VN >= _VN.size())
 			VN = _VN.size() - 1;
-
+		
 		int V = _Vertices[x].V - 1;
 		if (V >= _V.size())
 			V = _V.size() - 1;
