@@ -21,6 +21,8 @@
 
 #include "Chunk.h"
 
+#include "Plane.h"
+
 class Scene3D : public IScene
 {
 public:
@@ -56,6 +58,9 @@ private:
 	ParticleSystem* m_pParticleSystem;
 
 	Chunk* m_pChunk;
+
+	Plane* m_pPlane;
+
 private:
 	TexturedMaterial* m_pTextureMaterial;
 	TexturedNormMaterial* m_pTextureNormMaterial;

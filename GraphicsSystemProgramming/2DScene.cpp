@@ -62,7 +62,7 @@ void Scene2D::Render()
 	//	int x = rand() % 1000;
 	//	int y = rand() % 1000;
 	//
-	//	m_pSpriteBatch->DrawTexture(m_pTexture2, Rect(x, y, 10, 10), D3DXVECTOR4(1, 1, 1, 1));
+		m_pSpriteBatch->DrawTexture(m_pTexture2, Rect(100, 100, 100, 100), Rect(0.5f,0.5f,0.5f,0.5f), D3DXVECTOR4(1, 1, 1, 1));
 	//
 	//	//m_pSpriteBatch->DrawTexture(m_pTexture, Rect(x +10, y, 10, 10), Rect(0, 0, 0, 0), D3DXVECTOR4(1, 1, 1, 1));
 	//}

@@ -70,6 +70,9 @@
     <Filter Include="Quelldateien\Scene\3DScene\VoxelChunk">
       <UniqueIdentifier>{2dcd8455-eb46-4052-86b0-562263b69878}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Scene\3DScene\Plane">
+      <UniqueIdentifier>{78a76cb1-b90f-401c-a716-ba07316e9eac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -131,6 +134,9 @@
     </ClCompile>
     <ClCompile Include="Chunk.cpp">
       <Filter>Quelldateien\Scene\3DScene\VoxelChunk</Filter>
+    </ClCompile>
+    <ClCompile Include="Plane.cpp">
+      <Filter>Quelldateien\Scene\3DScene\Plane</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -215,6 +221,12 @@
     <ClInclude Include="Chunk_Structs.h">
       <Filter>Quelldateien\Scene\3DScene\VoxelChunk</Filter>
     </ClInclude>
+    <ClInclude Include="Plane.h">
+      <Filter>Quelldateien\Scene\3DScene\Plane</Filter>
+    </ClInclude>
+    <ClInclude Include="PlaneStruct.h">
+      <Filter>Quelldateien\Scene\3DScene\Plane</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="UnserErsterShader.hlsl">
@@ -231,6 +243,12 @@
     </FxCompile>
     <FxCompile Include="ParticleShader.hlsl">
       <Filter>Quelldateien\Scene\3DScene\ParticleSystem</Filter>
+    </FxCompile>
+    <FxCompile Include="VoxelShader.hlsl">
+      <Filter>Quelldateien\Scene\3DScene\VoxelChunk</Filter>
+    </FxCompile>
+    <FxCompile Include="PlaneShader.hlsl">
+      <Filter>Quelldateien\Scene\3DScene\Plane</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

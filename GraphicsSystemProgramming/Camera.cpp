@@ -19,7 +19,7 @@ Camera::Camera()
 
 	UpdateViewMatrix();
 
-	D3DXMatrixPerspectiveFovLH(&m_Projection, D3DXToRadian(50), 800.0f / 600.0f, 0.2f, 1000.0f);
+	D3DXMatrixPerspectiveFovLH(&m_Projection, D3DXToRadian(60), 800.0f / 600.0f, 0.1f, 1000.0f);
 }
 
 Camera::~Camera()
