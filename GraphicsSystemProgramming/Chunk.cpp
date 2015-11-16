@@ -7,6 +7,8 @@ void Chunk::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 	m_pDevice = p_pDevice;
 	m_pDevCon = p_pDevCon;
 
+	TimeSinceStart = 0;
+
 	// World Gen
 	for (int x = 0; x < ChunkSize; x++)
 		for (int y = 0; y < ChunkSize; y++)
@@ -169,11 +171,25 @@ void Chunk::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 
 
 	// VertexShader
-	D3DX11CompileFromFile("VoxelShader.hlsl", nullptr, nullptr, "VShader", "vs_5_0", 0, 0, nullptr, &_pVShaderBlob, &_pErrorBlob, nullptr);
+
+	if(D3DX11CompileFromFile("VoxelShader.hlsl", nullptr, nullptr, "VShader", "vs_5_0", 0, 0, nullptr, &_pVShaderBlob, &_pErrorBlob, nullptr) != S_OK)
+	{
+		MessageBox(0, (char*)_pErrorBlob->GetBufferPointer(), "Fehler im Vertexshader", 0);
+		PostQuitMessage(0);
+		return;
+	}
+
+
 	m_pDevice->CreateVertexShader(_pVShaderBlob->GetBufferPointer(), _pVShaderBlob->GetBufferSize(), nullptr, &m_pVertexShader);
 
 	// PixelShader
-	D3DX11CompileFromFile("VoxelShader.hlsl", nullptr, nullptr, "PShader", "ps_5_0", 0, 0, nullptr, &_pPShaderBlob, &_pErrorBlob, nullptr);
+	if(S_OK != D3DX11CompileFromFile("VoxelShader.hlsl", nullptr, nullptr, "PShader", "ps_5_0", 0, 0, nullptr, &_pPShaderBlob, &_pErrorBlob, nullptr))
+	{
+		MessageBox(0, (char*)_pErrorBlob->GetBufferPointer(), "Fehler im Pixelshader", 0);
+		PostQuitMessage(0);
+		return;
+	}
+	
 	m_pDevice->CreatePixelShader(_pPShaderBlob->GetBufferPointer(), _pPShaderBlob->GetBufferSize(), nullptr, &m_pPixelShader);
 
 
@@ -220,8 +236,24 @@ void Chunk::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 	_CBDesc.ByteWidth = sizeof(D3DXMATRIX);
 	_CBDesc.CPUAccessFlags = D3D11_CPU_ACCESS_FLAG::D3D11_CPU_ACCESS_WRITE;
 	_CBDesc.Usage = D3D11_USAGE::D3D11_USAGE_DYNAMIC;
-	
-	m_pDevice->CreateBuffer(&_CBDesc, nullptr, &m_pConstantBuffer);
+
+	m_pDevice->CreateBuffer(&_CBDesc, nullptr, &m_pConstantBufferMatrix);
+
+
+	D3D11_BUFFER_DESC _CBDescLight;
+	ZeroMemory(&_CBDescLight, sizeof(_CBDescLight));
+
+	_CBDescLight.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_CONSTANT_BUFFER;
+	_CBDescLight.ByteWidth = sizeof(ChunkConstantBuffer);
+	_CBDescLight.CPUAccessFlags = D3D11_CPU_ACCESS_FLAG::D3D11_CPU_ACCESS_WRITE;
+	_CBDescLight.Usage = D3D11_USAGE::D3D11_USAGE_DYNAMIC;
+
+	m_pDevice->CreateBuffer(&_CBDescLight, nullptr, &m_pConstantBufferLight);
+}
+
+void Chunk::Update(float p_DeltaTime)
+{
+	TimeSinceStart += p_DeltaTime;
 }
 
 void Chunk::Render(Camera* p_pCamera)
@@ -230,9 +262,30 @@ void Chunk::Render(Camera* p_pCamera)
 
 	D3D11_MAPPED_SUBRESOURCE _CBMSR;
 
-	m_pDevCon->Map(m_pConstantBuffer, 0, D3D11_MAP::D3D11_MAP_WRITE_DISCARD, 0, &_CBMSR);
+	m_pDevCon->Map(m_pConstantBufferMatrix, 0, D3D11_MAP::D3D11_MAP_WRITE_DISCARD, 0, &_CBMSR);
 	memcpy(_CBMSR.pData, &_Mat, sizeof(D3DXMATRIX));
-	m_pDevCon->Unmap(m_pConstantBuffer, 0);
+	m_pDevCon->Unmap(m_pConstantBufferMatrix, 0);
+
+	D3DXMATRIX _SunRotation;
+	D3DXMatrixRotationX(&_SunRotation, TimeSinceStart);
+
+	ChunkConstantBuffer _CCB;
+
+	D3DXVECTOR3 _LightDir(2, -3, 1);
+	D3DXVec3Normalize(&_LightDir, &_LightDir);
+
+	_CCB.LightDir = D3DXVECTOR4(_LightDir.x, _LightDir.y, _LightDir.z, 0);
+
+	D3DXVec4Transform(&_CCB.LightDir, &_CCB.LightDir, &_SunRotation);
+
+	float Intensity = 1;
+	_CCB.RGBLightColor_ALightIntensity = D3DXVECTOR4(1 * Intensity, 1 * Intensity, 0.7f * Intensity, 0);
+
+	m_pDevCon->Map(m_pConstantBufferLight, 0, D3D11_MAP::D3D11_MAP_WRITE_DISCARD, 0, &_CBMSR);
+	memcpy(_CBMSR.pData, &_CCB, sizeof(ChunkConstantBuffer));
+	m_pDevCon->Unmap(m_pConstantBufferLight, 0);
+
+
 
 	UINT stride = sizeof(ChunkVertexStruct);
 	UINT offset = 0;
@@ -243,10 +296,11 @@ void Chunk::Render(Camera* p_pCamera)
 	m_pDevCon->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	m_pDevCon->VSSetShader(m_pVertexShader, nullptr, 0);
-	m_pDevCon->VSSetConstantBuffers(0, 1, &m_pConstantBuffer);
+	m_pDevCon->VSSetConstantBuffers(0, 1, &m_pConstantBufferMatrix);
 
 	m_pDevCon->PSSetShader(m_pPixelShader, nullptr, 0);
 	m_pDevCon->PSSetShaderResources(0, 1, &m_pDirtTexture);
+	m_pDevCon->PSSetConstantBuffers(0, 1, &m_pConstantBufferLight);
 
 
 	m_pDevCon->DrawIndexed(FaceCount * 2 * 3, 0, 0);

@@ -8,3 +8,9 @@ struct ChunkVertexStruct
 	D3DXVECTOR2 UV;			// IED1
 	D3DXVECTOR3 Normal;		// IED2
 };
+
+struct ChunkConstantBuffer
+{
+	D3DXVECTOR4 LightDir;
+	D3DXVECTOR4 RGBLightColor_ALightIntensity;
+};

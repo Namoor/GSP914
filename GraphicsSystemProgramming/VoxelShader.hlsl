@@ -10,6 +10,14 @@ cbuffer Matrix
 	float4x4 WVPMatrix;
 };
 
+cbuffer LightData
+{
+	float4 LightDir;
+
+	float4 RGBLightColor_ALightIntensity;
+};
+
+
 VertexShaderOut VShader(float3 pos : POSITION0, float2 uv : TEXCOORD0, float3 Normal : NORMAL0)
 {
 	VertexShaderOut _Out;
@@ -26,8 +34,17 @@ SamplerState gSampler;
 
 float4 PShader(VertexShaderOut _In) : SV_TARGET
 {
-	float LightIntensity = 0.3 + 0.7 * saturate(dot(_In.normal, normalize(float3(-2, 3, -1))));
+	// _In.normal: N
+
+	float3 LightIntensity = saturate(dot(-LightDir, _In.normal)) * RGBLightColor_ALightIntensity.rgb; // * C * I
+
+		float3 AmbientLight = float3(1, 1, 1);
+
+
+		LightIntensity = LightIntensity * 0.7 + AmbientLight * 0.3;
+
+
 	float4 _Tex = gTexture.Sample(gSampler, _In.uv);
 
-		return float4(_Tex.rgb * LightIntensity, _Tex.a);
+		return float4(_Tex.rgb * LightIntensity.rgb, _Tex.a);
 }

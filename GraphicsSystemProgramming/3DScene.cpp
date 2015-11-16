@@ -49,7 +49,7 @@ void Scene3D::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 	CurrentFPS = 0;
 
 
-	int max = 16;
+	int max = 32;
 
 	for (int x = 0; x < max; x++)
 		for (int y = 0; y < max; y++)
@@ -77,6 +77,8 @@ void Scene3D::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 
 void Scene3D::Update(float p_DeltaTime)
 {
+	m_pChunk->Update(p_DeltaTime);
+
 	m_pInput->Update();
 	m_pCamera->Update(p_DeltaTime, m_pInput);
 
@@ -128,15 +130,15 @@ void Scene3D::Render()
 	char Buffer[200];
 	sprintf_s(Buffer, "FPS: %d", CurrentFPS);
 
-	//for (auto _It = m_Objects.begin(); _It != m_Objects.end(); _It++)
-	//{
-	//	(*_It)->Render(m_pCamera);
-	//	
-	//}
+	for (auto _It = m_Objects.begin(); _It != m_Objects.end(); _It++)
+	{
+		//(*_It)->Render(m_pCamera);
+		
+	}
 
 	m_pChunk->Render(m_pCamera);
 
-	m_pPlane->Render(m_pCamera);
+	//m_pPlane->Render(m_pCamera);
 
 	//m_pParticleSystem->Render(m_pCamera);
 
