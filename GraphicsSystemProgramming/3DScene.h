@@ -23,6 +23,8 @@
 
 #include "Plane.h"
 
+#include "ShadingDemo.h"
+
 class Scene3D : public IScene
 {
 public:
@@ -60,6 +62,8 @@ private:
 	Chunk* m_pChunk;
 
 	Plane* m_pPlane;
+
+	ShadingDemo* m_pShadingDemo;
 
 private:
 	TexturedMaterial* m_pTextureMaterial;

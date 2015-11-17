@@ -73,6 +73,9 @@
     <Filter Include="Quelldateien\Scene\3DScene\Plane">
       <UniqueIdentifier>{78a76cb1-b90f-401c-a716-ba07316e9eac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Scene\3DScene\ShadingDemo">
+      <UniqueIdentifier>{3bbbc847-c7d3-4c02-9568-b8a1077756e4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -137,6 +140,9 @@
     </ClCompile>
     <ClCompile Include="Plane.cpp">
       <Filter>Quelldateien\Scene\3DScene\Plane</Filter>
+    </ClCompile>
+    <ClCompile Include="ShadingDemo.cpp">
+      <Filter>Quelldateien\Scene\3DScene\ShadingDemo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -227,6 +233,12 @@
     <ClInclude Include="PlaneStruct.h">
       <Filter>Quelldateien\Scene\3DScene\Plane</Filter>
     </ClInclude>
+    <ClInclude Include="ShadingDemo_Structs.h">
+      <Filter>Quelldateien\Scene\3DScene\ShadingDemo</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadingDemo.h">
+      <Filter>Quelldateien\Scene\3DScene\ShadingDemo</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="UnserErsterShader.hlsl">
@@ -249,6 +261,9 @@
     </FxCompile>
     <FxCompile Include="PlaneShader.hlsl">
       <Filter>Quelldateien\Scene\3DScene\Plane</Filter>
+    </FxCompile>
+    <FxCompile Include="ShadingDemo.hlsl">
+      <Filter>Quelldateien\Scene\3DScene\ShadingDemo</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

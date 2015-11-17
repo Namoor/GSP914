@@ -72,7 +72,8 @@ void Scene3D::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 	m_pPlane = new Plane();
 	m_pPlane->Init(m_pDevice, m_pDevCon);
 
-
+	m_pShadingDemo = new ShadingDemo();
+	m_pShadingDemo->Init(m_pDevice, m_pDevCon);
 }
 
 void Scene3D::Update(float p_DeltaTime)
@@ -117,11 +118,13 @@ void Scene3D::Update(float p_DeltaTime)
 			(*_It)->m_pMaterial = m_pTextureMaterial;
 		}
 	}
+
+	m_pShadingDemo->Update(p_DeltaTime);
 }
 
 void Scene3D::Render()
 {
-	
+	m_pShadingDemo->Render(m_pCamera);
 
 
 	std::string _FPSString("FPS: ");
@@ -130,13 +133,13 @@ void Scene3D::Render()
 	char Buffer[200];
 	sprintf_s(Buffer, "FPS: %d", CurrentFPS);
 
-	for (auto _It = m_Objects.begin(); _It != m_Objects.end(); _It++)
-	{
-		//(*_It)->Render(m_pCamera);
-		
-	}
+	//for (auto _It = m_Objects.begin(); _It != m_Objects.end(); _It++)
+	//{
+	//	//(*_It)->Render(m_pCamera);
+	//	
+	//}
 
-	m_pChunk->Render(m_pCamera);
+//	m_pChunk->Render(m_pCamera);
 
 	//m_pPlane->Render(m_pCamera);
 
