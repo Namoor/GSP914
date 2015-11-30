@@ -1,14 +1,16 @@
 #include "ShadingDemo.h"
 #include "ShadingDemo_Structs.h"
 
-#define PLANEVERTEXCOUNTPERDIMENSION 2
+#define PLANEVERTEXCOUNTPERDIMENSION 1024
+
+#define DERIATIVEDISTANCE 0.002f
 
 void ShadingDemo::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 {
 	m_pDevice = p_pDevice;
 	m_pDevCon = p_pDevCon;
 
-
+	TimeSinceStart = 0;
 
 	// Vertex Buffer
 	const int VertexCount = PLANEVERTEXCOUNTPERDIMENSION * PLANEVERTEXCOUNTPERDIMENSION;
@@ -23,21 +25,31 @@ void ShadingDemo::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 
 	m_pDevice->CreateBuffer(&_VBDesc, nullptr, &m_pVertexBuffer);
 
-	ShadingDemo_Vertex _Vertices[VertexCount];
+	ShadingDemo_Vertex* _Vertices = new ShadingDemo_Vertex[VertexCount];
 
 	int _CurrentIndex = 0;
 
 	for (int Y = 0; Y < PLANEVERTEXCOUNTPERDIMENSION; Y++)
 		for (int X = 0; X < PLANEVERTEXCOUNTPERDIMENSION; X++)
 		{
-			float _X = X / (PLANEVERTEXCOUNTPERDIMENSION - 1);
-			float _Y = Y / (PLANEVERTEXCOUNTPERDIMENSION - 1);
+			float _X = (float)X / (PLANEVERTEXCOUNTPERDIMENSION - 1);
+			float _Y = (float)Y / (PLANEVERTEXCOUNTPERDIMENSION - 1);
 
 			float _XP = _X * 2 - 1;
 			float _YP = _Y * 2 - 1;
 
-			_Vertices[_CurrentIndex].Position = D3DXVECTOR3(_XP, GetHeightAt(_XP, _YP), _YP);
-			_Vertices[_CurrentIndex].Normal = D3DXVECTOR3(0, 1, 0);
+			D3DXVECTOR3 _Pos = D3DXVECTOR3(_XP, GetHeightAt(_XP, _YP), _YP);
+
+			D3DXVECTOR3 _ddx = D3DXVECTOR3(_XP + DERIATIVEDISTANCE, GetHeightAt(_XP + DERIATIVEDISTANCE, _YP), _YP);
+			D3DXVECTOR3 _ddy = D3DXVECTOR3(_XP, GetHeightAt(_XP, _YP + DERIATIVEDISTANCE), _YP + DERIATIVEDISTANCE);
+
+			_ddx -= _Pos;
+			_ddy -= _Pos;
+
+
+			_Vertices[_CurrentIndex].Position = _Pos;
+			D3DXVec3Cross(&_Vertices[_CurrentIndex].Normal, &_ddy, &_ddx);
+			D3DXVec3Normalize(&_Vertices[_CurrentIndex].Normal, &_Vertices[_CurrentIndex].Normal);
 			_Vertices[_CurrentIndex].UV = D3DXVECTOR2(_X, _Y);
 
 			_CurrentIndex++;
@@ -46,42 +58,75 @@ void ShadingDemo::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 	D3D11_MAPPED_SUBRESOURCE _VBMSR;
 
 	m_pDevCon->Map(m_pVertexBuffer, 0, D3D11_MAP::D3D11_MAP_WRITE_DISCARD, 0, &_VBMSR);
-	memcpy(_VBMSR.pData, &_Vertices, VertexCount * sizeof(ShadingDemo_Vertex));
+	memcpy(_VBMSR.pData, _Vertices, VertexCount * sizeof(ShadingDemo_Vertex));
 	m_pDevCon->Unmap(m_pVertexBuffer, 0);
-	
+
+	delete _Vertices;
 
 	// IndexBuffer
+	const int _QuadCountPerDimension = PLANEVERTEXCOUNTPERDIMENSION - 1;
+
+	m_IndexCount = _QuadCountPerDimension * _QuadCountPerDimension * 6;
 
 	D3D11_BUFFER_DESC _IBDesc;
 	ZeroMemory(&_IBDesc, sizeof(_IBDesc));
 
 	_IBDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_INDEX_BUFFER;
-	_IBDesc.ByteWidth = 6 * sizeof(unsigned int);
+	_IBDesc.ByteWidth = m_IndexCount * sizeof(unsigned int);
 	_IBDesc.CPUAccessFlags = D3D11_CPU_ACCESS_FLAG::D3D11_CPU_ACCESS_WRITE;
 	_IBDesc.Usage = D3D11_USAGE::D3D11_USAGE_DYNAMIC;
 
 	m_pDevice->CreateBuffer(&_IBDesc, nullptr, &m_pIndexBuffer);
 
-	unsigned int _Indices[6];
 
-	// Dreieck0
-	_Indices[0] = 0;
-	_Indices[1] = 2;
-	_Indices[2] = 3;
+	unsigned int* _Indices = new unsigned int[_QuadCountPerDimension * _QuadCountPerDimension * 6];
 
-	// Dreieck1
-	_Indices[3] = 0;
-	_Indices[4] = 3;
-	_Indices[5] = 1;
+	_CurrentIndex = 0;
+
+	for (int y = 0; y < _QuadCountPerDimension; y++)
+	{
+		for (int x = 0; x < _QuadCountPerDimension; x++)
+		{
+			// CurrentIndex 0
+
+			int _VertexBottomLeft = y * PLANEVERTEXCOUNTPERDIMENSION + x;
+			int _VertexBottomRight = _VertexBottomLeft + 1;
+			int _VertexTopLeft = _VertexBottomLeft + PLANEVERTEXCOUNTPERDIMENSION;
+			int _VertexTopRight = _VertexTopLeft + 1;
+
+			_Indices[_CurrentIndex * 6 + 0] = _VertexBottomLeft;
+			_Indices[_CurrentIndex * 6 + 1] = _VertexTopLeft;
+			_Indices[_CurrentIndex * 6 + 2] = _VertexTopRight;
+
+			_Indices[_CurrentIndex * 6 + 3] = _VertexBottomLeft;
+			_Indices[_CurrentIndex * 6 + 4] = _VertexTopRight;
+			_Indices[_CurrentIndex * 6 + 5] = _VertexBottomRight;
+
+
+
+			_CurrentIndex++;
+		}
+	}
+
+
+	//// Dreieck0
+	//_Indices[0] = 0;
+	//_Indices[1] = 2;
+	//_Indices[2] = 3;
+	//
+	//// Dreieck1
+	//_Indices[3] = 0;
+	//_Indices[4] = 3;
+	//_Indices[5] = 1;
 
 	D3D11_MAPPED_SUBRESOURCE _IBMSR;
 
 	m_pDevCon->Map(m_pIndexBuffer, 0, D3D11_MAP::D3D11_MAP_WRITE_DISCARD, 0, &_IBMSR);
-	memcpy(_IBMSR.pData, &_Indices, 6 * sizeof(unsigned int));
+	memcpy(_IBMSR.pData, _Indices, m_IndexCount * sizeof(unsigned int));
 	m_pDevCon->Unmap(m_pIndexBuffer, 0);
 
+	delete _Indices;
 
-	
 	// VertexShader
 	ID3D10Blob* _pVertexShader;
 	ID3D10Blob* _pError;
@@ -96,11 +141,11 @@ void ShadingDemo::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 	}
 
 	m_pDevice->CreateVertexShader(_pVertexShader->GetBufferPointer(), _pVertexShader->GetBufferSize(), nullptr, &m_pVertexShader);
-	
-	
+
+
 	// PixelShader
 	ID3D10Blob* _pPixelShader;
-	
+
 	if (D3DX11CompileFromFile("ShadingDemo.hlsl", nullptr, nullptr, "PShader", "ps_5_0", 0, 0, nullptr,
 		&_pPixelShader, &_pError, nullptr) != S_OK)
 	{
@@ -173,12 +218,18 @@ void ShadingDemo::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 
 float ShadingDemo::GetHeightAt(float x, float z)
 {
-	return x * x + z * z;
+
+	float _DistSqr = x * x + z * z;
+
+	if (_DistSqr > 1)
+		return 0;
+
+	return sqrt(1 - _DistSqr);
 }
 
 void ShadingDemo::Update(float DeltaTime)
 {
-
+	TimeSinceStart += DeltaTime;
 }
 
 void ShadingDemo::Render(Camera* p_pCamera)
@@ -189,6 +240,9 @@ void ShadingDemo::Render(Camera* p_pCamera)
 
 	_LCB.DirectionalLightDirection = D3DXVECTOR4(0, -1, 0, 0);
 	_LCB.DirectionalLightColor = D3DXVECTOR4(1, 1, 1, 0);
+
+	_LCB.PointLightPosition = D3DXVECTOR4(cos(TimeSinceStart * 20), 1, sin(TimeSinceStart * 20), 0);
+	_LCB.PointLightColor = D3DXVECTOR4(1, 0, 0, 5);
 
 	_MCB.MVP = p_pCamera->GetViewMatrix() * p_pCamera->GetProjMatrix();
 
@@ -220,7 +274,7 @@ void ShadingDemo::Render(Camera* p_pCamera)
 	m_pDevCon->PSSetShaderResources(0, 1, &m_pTexture);
 
 	// DrawCall
-	m_pDevCon->DrawIndexed((PLANEVERTEXCOUNTPERDIMENSION - 1) * (PLANEVERTEXCOUNTPERDIMENSION - 1) * 6, 0, 0);
+	m_pDevCon->DrawIndexed(m_IndexCount, 0, 0);
 }
 
 

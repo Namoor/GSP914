@@ -139,7 +139,7 @@ void Scene3D::Render()
 	//	
 	//}
 
-//	m_pChunk->Render(m_pCamera);
+	//m_pChunk->Render(m_pCamera);
 
 	//m_pPlane->Render(m_pCamera);
 

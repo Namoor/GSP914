@@ -15,6 +15,9 @@ struct ShadingDemo_LightConstantBuffer
 	// Directional Light
 	D3DXVECTOR4 DirectionalLightDirection;
 	D3DXVECTOR4 DirectionalLightColor;
+
+	D3DXVECTOR4 PointLightPosition;
+	D3DXVECTOR4 PointLightColor;
 };
 
 struct ShadingDemo_MatrixConstantBuffer

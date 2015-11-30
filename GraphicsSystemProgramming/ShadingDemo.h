@@ -30,4 +30,8 @@ private:
 	ID3D11DeviceContext* m_pDevCon;
 
 	float GetHeightAt(float x, float z);
+
+	int m_IndexCount;
+
+	float TimeSinceStart;
 };
