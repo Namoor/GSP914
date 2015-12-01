@@ -12,10 +12,14 @@ struct ShadingDemo_Vertex
 
 struct ShadingDemo_LightConstantBuffer
 {
+	// Global
+	D3DXVECTOR4 CameraPosition;
+
 	// Directional Light
 	D3DXVECTOR4 DirectionalLightDirection;
 	D3DXVECTOR4 DirectionalLightColor;
 
+	// Point Light
 	D3DXVECTOR4 PointLightPosition;
 	D3DXVECTOR4 PointLightColor;
 };
@@ -23,4 +27,6 @@ struct ShadingDemo_LightConstantBuffer
 struct ShadingDemo_MatrixConstantBuffer
 {
 	D3DXMATRIX MVP;
+	D3DXMATRIX M;
+	D3DXMATRIX M_TransInv;
 };
