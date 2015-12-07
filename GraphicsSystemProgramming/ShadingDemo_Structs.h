@@ -22,6 +22,9 @@ struct ShadingDemo_LightConstantBuffer
 	// Point Light
 	D3DXVECTOR4 PointLightPosition;
 	D3DXVECTOR4 PointLightColor;
+
+	// Material Properties
+	D3DXVECTOR4 R_SpecRoughness_G_SpecIntensity;
 };
 
 struct ShadingDemo_MatrixConstantBuffer

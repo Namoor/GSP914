@@ -213,7 +213,9 @@ void ShadingDemo::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 
 	// Texture
 
-	D3DX11CreateShaderResourceViewFromFile(m_pDevice, "marble.jpg", nullptr, nullptr, &m_pTexture, nullptr);
+	D3DX11CreateShaderResourceViewFromFile(m_pDevice, "Rocks_dif.jpg", nullptr, nullptr, &m_pTexture, nullptr);
+	D3DX11CreateShaderResourceViewFromFile(m_pDevice, "Rocks_Spec.jpg", nullptr, nullptr, &m_pTexture_Spec, nullptr);
+	D3DX11CreateShaderResourceViewFromFile(m_pDevice, "Rocks_Nrm.dds", nullptr, nullptr, &m_pTexture_Nrm, nullptr);
 };
 
 
@@ -221,7 +223,7 @@ void ShadingDemo::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 float ShadingDemo::GetHeightAt(float x, float z)
 {
 	//return cos(x * 1.5f) + cos(z* 1.5f);
-
+	return 0;
 
 	float _DistSqr = x * x + z * z;
 
@@ -240,30 +242,37 @@ void ShadingDemo::Update(float DeltaTime)
 
 void ShadingDemo::Render(Camera* p_pCamera)
 {
+	D3DXMATRIX _Rotation;
+	D3DXMatrixRotationY(&_Rotation, 1 * TimeSinceStart);
+
+
 	// Constant Buffer Aktualisieren
 	ShadingDemo_LightConstantBuffer _LCB;
 	ShadingDemo_MatrixConstantBuffer _MCB;
 
 	_LCB.CameraPosition = p_pCamera->GetPosition4();
-	_LCB.CameraPosition.w = 80;
 
-	_LCB.DirectionalLightDirection = D3DXVECTOR4(0, -1, 0, 0);
+	//_LCB.DirectionalLightDirection = D3DXVECTOR4(0.7f, -0.7f, 0, 0);
+	D3DXVECTOR4 _Light = D3DXVECTOR4(0.7f, -0.7f, 0, 0);
+	D3DXVec4Transform(&_LCB.DirectionalLightDirection, &_Light, &_Rotation);
 	_LCB.DirectionalLightColor = D3DXVECTOR4(1, 1, 1, 0);
 
 	_LCB.PointLightPosition = D3DXVECTOR4(cos(TimeSinceStart * 2), 1, sin(TimeSinceStart * 2), 0);
-	_LCB.PointLightColor = D3DXVECTOR4(1, 0, 0, 5);
+	_LCB.PointLightColor = D3DXVECTOR4(0, 0, 0, 5);
+
+	_LCB.R_SpecRoughness_G_SpecIntensity.x = 4;
+	_LCB.R_SpecRoughness_G_SpecIntensity.y = 0.1;
+
 
 	D3DXMATRIX _WorldMatrix;
-	D3DXMATRIX _Rotation;
 
 	D3DXMatrixScaling(&_WorldMatrix, 1, 1, 1);
-	D3DXMatrixRotationY(&_Rotation, TimeSinceStart);
 
-	_WorldMatrix *= _Rotation;
+	//_WorldMatrix *= _Rotation;
 
 	//D3DXMatrixRotationX(&_WorldMatrix, D3DXToRadian(90));
 
-	_MCB.MVP =  _WorldMatrix *  p_pCamera->GetViewMatrix() * p_pCamera->GetProjMatrix();
+	_MCB.MVP = _WorldMatrix *  p_pCamera->GetViewMatrix() * p_pCamera->GetProjMatrix();
 	_MCB.M = _WorldMatrix;
 
 	D3DXMatrixInverse(&_MCB.M_TransInv, nullptr, &_WorldMatrix);
@@ -295,6 +304,8 @@ void ShadingDemo::Render(Camera* p_pCamera)
 	m_pDevCon->PSSetShader(m_pPixelShader, nullptr, 0);
 	m_pDevCon->PSSetConstantBuffers(0, 1, &m_pLightConstantBuffer);
 	m_pDevCon->PSSetShaderResources(0, 1, &m_pTexture);
+	m_pDevCon->PSSetShaderResources(1, 1, &m_pTexture_Spec);
+	m_pDevCon->PSSetShaderResources(2, 1, &m_pTexture_Nrm);
 
 	// DrawCall
 	m_pDevCon->DrawIndexed(m_IndexCount, 0, 0);

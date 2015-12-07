@@ -48,9 +48,9 @@ void System::Run(IScene* p_pScene)
 
 
 		float _Color[4];
-		_Color[0] = 0.5f;//(rand() % 256) / 255.0f;
-		_Color[1] = 0.5f;//(rand() % 256) / 255.0f;
-		_Color[2] = 0.5f;//(rand() % 256) / 255.0f;
+		_Color[0] = 0.3f;//(rand() % 256) / 255.0f;
+		_Color[1] = 0.3f;//(rand() % 256) / 255.0f;
+		_Color[2] = 0.3f;//(rand() % 256) / 255.0f;
 		_Color[3] = 1;
 
 		m_pDeviceContext->ClearRenderTargetView(m_pBackBuffer, _Color);

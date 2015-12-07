@@ -25,6 +25,8 @@ private:
 	ID3D11Buffer* m_pLightConstantBuffer;
 
 	ID3D11ShaderResourceView* m_pTexture;
+	ID3D11ShaderResourceView* m_pTexture_Spec;
+	ID3D11ShaderResourceView* m_pTexture_Nrm;
 
 	ID3D11Device* m_pDevice;
 	ID3D11DeviceContext* m_pDevCon;
