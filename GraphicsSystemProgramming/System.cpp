@@ -25,7 +25,7 @@ void System::Run(IScene* p_pScene)
 	InitGraphics();
 
 
-	m_pScene->Init(m_pDevice, m_pDeviceContext);
+	m_pScene->Init(m_pDevice, m_pDeviceContext, m_pBackBuffer, m_pDepthStencilView);
 
 
 	MSG msg;

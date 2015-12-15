@@ -5,13 +5,19 @@
 struct ShadingDemo_Vertex
 {
 	D3DXVECTOR3 Position;	// 3 * 4b = 12 bytes
-	D3DXVECTOR2 UV;			// 2 * 4b = 8 bytes
-	D3DXVECTOR3 Normal;
+	D3DXVECTOR2 UV;			// 2 * 4b = 08 bytes
+	D3DXVECTOR3 Normal;		// 3 * 4b = 12 bytes
+	D3DXVECTOR3 Tangent;	// 3 * 4b = 12 bytes
+	D3DXVECTOR3 BiTangent;
 };
 
 
 struct ShadingDemo_LightConstantBuffer
 {
+	// Worldmatrix
+	D3DXMATRIX M;
+
+
 	// Global
 	D3DXVECTOR4 CameraPosition;
 
@@ -32,4 +38,5 @@ struct ShadingDemo_MatrixConstantBuffer
 	D3DXMATRIX MVP;
 	D3DXMATRIX M;
 	D3DXMATRIX M_TransInv;
+	D3DXMATRIX LightViewProj;
 };

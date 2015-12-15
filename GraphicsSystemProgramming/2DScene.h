@@ -14,7 +14,7 @@ public:
 	Scene2D();
 	~Scene2D();
 
-	virtual void Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon) override;
+	virtual void Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon, ID3D11RenderTargetView* p_pBackBuffer, ID3D11DepthStencilView* p_pDSV) override;
 
 	virtual void Update(float p_DeltaTime) override;
 	virtual void Render() override;

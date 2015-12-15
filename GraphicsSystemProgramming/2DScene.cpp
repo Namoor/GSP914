@@ -16,7 +16,7 @@ Scene2D::~Scene2D()
 
 }
 
-void Scene2D::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
+void Scene2D::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon, ID3D11RenderTargetView* p_pBackBuffer, ID3D11DepthStencilView* p_pDSV)
 {
 	m_pDevice = p_pDevice;
 	m_pDeviceContext = p_pDevCon;

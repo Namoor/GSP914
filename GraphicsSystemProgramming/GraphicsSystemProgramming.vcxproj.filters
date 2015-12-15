@@ -76,6 +76,12 @@
     <Filter Include="Quelldateien\Scene\3DScene\ShadingDemo">
       <UniqueIdentifier>{3bbbc847-c7d3-4c02-9568-b8a1077756e4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Scene\3DScene\ShadowMap">
+      <UniqueIdentifier>{ddfbebce-a565-49da-ad42-59f29f3f4649}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Scene\3DScene\DirectionalLight">
+      <UniqueIdentifier>{aa726af8-2284-499f-9211-7658aa38eb6a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -143,6 +149,12 @@
     </ClCompile>
     <ClCompile Include="ShadingDemo.cpp">
       <Filter>Quelldateien\Scene\3DScene\ShadingDemo</Filter>
+    </ClCompile>
+    <ClCompile Include="ShadowMap.cpp">
+      <Filter>Quelldateien\Scene\3DScene\ShadowMap</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectionalLight.cpp">
+      <Filter>Quelldateien\Scene\3DScene\DirectionalLight</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -238,6 +250,12 @@
     </ClInclude>
     <ClInclude Include="ShadingDemo.h">
       <Filter>Quelldateien\Scene\3DScene\ShadingDemo</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadowMap.h">
+      <Filter>Quelldateien\Scene\3DScene\ShadowMap</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectionalLight.h">
+      <Filter>Quelldateien\Scene\3DScene\DirectionalLight</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

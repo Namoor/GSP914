@@ -3,6 +3,7 @@
 
 #include "d3dinclude.h"
 #include "Camera.h"
+#include "DirectionalLight.h"
 
 class ShadingDemo
 {
@@ -10,7 +11,8 @@ public:
 	void Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon);
 
 	void Update(float p_DeltaTime);
-	void Render(Camera* p_pCamera);
+	void Render(Camera* p_pCamera, DirectionalLight* p_pDirectionalLight);
+	void RenderDepth(D3DXMATRIX p_ViewProj, D3DXVECTOR4 RenderingPosition);
 
 private:
 	ID3D11Buffer* m_pVertexBuffer;

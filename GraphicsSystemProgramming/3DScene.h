@@ -25,13 +25,15 @@
 
 #include "ShadingDemo.h"
 
+#include "DirectionalLight.h"
+
 class Scene3D : public IScene
 {
 public:
 	Scene3D();
 	~Scene3D();
 
-	virtual void Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon) override;
+	virtual void Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon, ID3D11RenderTargetView* p_pBackBuffer, ID3D11DepthStencilView* p_pDSV) override;
 
 	virtual void Update(float p_DeltaTime) override;
 	virtual void Render() override;
@@ -42,6 +44,8 @@ private:
 	ID3D11Device* m_pDevice;
 	ID3D11DeviceContext* m_pDevCon;
 
+	ID3D11RenderTargetView* m_pBackBuffer;
+	ID3D11DepthStencilView* m_pDSV;
 
 private:
 	Cube* m_pCube;
@@ -64,6 +68,10 @@ private:
 	Plane* m_pPlane;
 
 	ShadingDemo* m_pShadingDemo;
+
+	DirectionalLight* m_pDirectionalLight;
+
+	float TimeSinceStart;
 
 private:
 	TexturedMaterial* m_pTextureMaterial;

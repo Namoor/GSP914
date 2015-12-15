@@ -89,6 +89,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="DirectionalLight.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -97,6 +98,7 @@
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="ShadingDemo.cpp" />
+    <ClCompile Include="ShadowMap.cpp" />
     <ClCompile Include="TexturedMaterial.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Rect.cpp" />
@@ -116,6 +118,7 @@
     <ClInclude Include="Cube.h" />
     <ClInclude Include="Cube_Vertex.h" />
     <ClInclude Include="d3dinclude.h" />
+    <ClInclude Include="DirectionalLight.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="IScene.h" />
@@ -128,6 +131,7 @@
     <ClInclude Include="PlaneStruct.h" />
     <ClInclude Include="ShadingDemo.h" />
     <ClInclude Include="ShadingDemo_Structs.h" />
+    <ClInclude Include="ShadowMap.h" />
     <ClInclude Include="TexturedMaterial.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Rect.h" />
