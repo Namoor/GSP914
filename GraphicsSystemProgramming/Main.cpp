@@ -12,4 +12,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//_pSystem->Run(new Scene2D());
 	_pSystem->Run(new Scene3D());
+
+	return 0;
 }

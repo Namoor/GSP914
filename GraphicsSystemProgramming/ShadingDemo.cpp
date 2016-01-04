@@ -1,14 +1,17 @@
 #include "ShadingDemo.h"
 #include "ShadingDemo_Structs.h"
 
-#define PLANEVERTEXCOUNTPERDIMENSION 256
+#define PLANEVERTEXCOUNTPERDIMENSION 512
 
-#define DERIATIVEDISTANCE 0.002f
+#define DERIATIVEDISTANCE 0.2f
 
 void ShadingDemo::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 {
 	m_pDevice = p_pDevice;
 	m_pDevCon = p_pDevCon;
+
+	m_pPerlin = new PerlinNoiseOctave();
+	m_pPerlin->Init();
 
 	TimeSinceStart = 0;
 
@@ -248,6 +251,11 @@ void ShadingDemo::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon)
 
 float ShadingDemo::GetHeightAt(float x, float z)
 {
+
+	//return m_pPerlin->GetValue((x + 2) * 32, (z + 2) * 64) * 0.5f;
+	//return m_pPerlin->GetValue((x + 3) * 32, (z + 3) * 64) * 0.5f;
+
+
 	//return cos(x * 1.5f) + cos(z* 1.5f);
 	//return 0;
 

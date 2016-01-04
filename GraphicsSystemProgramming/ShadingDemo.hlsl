@@ -47,7 +47,7 @@ VertexShaderOut VShader(float3 pos : POSITION0, float2 uv : TEXCOORD0, float3 No
 
 	float4 _RGBNrm_ADisplacement = gTexture[2].SampleLevel(gSampler, uv, 0);
 
-		pos += Normal * _RGBNrm_ADisplacement.a * 0.1;
+		//pos += Normal * _RGBNrm_ADisplacement.a * 0.1;
 
 	_Out.pos = mul(WVPMatrix, float4(pos, 1));
 	_Out.worldPos = mul(WMatrix, float4(pos, 1));

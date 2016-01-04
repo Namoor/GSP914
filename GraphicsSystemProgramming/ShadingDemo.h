@@ -5,6 +5,8 @@
 #include "Camera.h"
 #include "DirectionalLight.h"
 
+#include "PerlinNoiseOctaves.h"
+
 class ShadingDemo
 {
 public:
@@ -38,4 +40,6 @@ private:
 	int m_IndexCount;
 
 	float TimeSinceStart;
+
+	PerlinNoiseOctave* m_pPerlin;
 };

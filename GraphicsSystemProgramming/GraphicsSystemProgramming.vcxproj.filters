@@ -82,6 +82,12 @@
     <Filter Include="Quelldateien\Scene\3DScene\DirectionalLight">
       <UniqueIdentifier>{aa726af8-2284-499f-9211-7658aa38eb6a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Scene\3DScene\PerlinNoise">
+      <UniqueIdentifier>{bbbc5079-3b0d-4abb-a6aa-deb50980d8af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Scene\3DScene\TilingTerrain">
+      <UniqueIdentifier>{7bd86c20-e049-4d20-b6e0-776ce02bb0d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -155,6 +161,21 @@
     </ClCompile>
     <ClCompile Include="DirectionalLight.cpp">
       <Filter>Quelldateien\Scene\3DScene\DirectionalLight</Filter>
+    </ClCompile>
+    <ClCompile Include="PerlinNoise.cpp">
+      <Filter>Quelldateien\Scene\3DScene\PerlinNoise</Filter>
+    </ClCompile>
+    <ClCompile Include="PerlinNoiseOctave.cpp">
+      <Filter>Quelldateien\Scene\3DScene\PerlinNoise</Filter>
+    </ClCompile>
+    <ClCompile Include="TilingTerrain.cpp">
+      <Filter>Quelldateien\Scene\3DScene\TilingTerrain</Filter>
+    </ClCompile>
+    <ClCompile Include="TilingTerrain_Data.cpp">
+      <Filter>Quelldateien\Scene\3DScene\TilingTerrain</Filter>
+    </ClCompile>
+    <ClCompile Include="TilingTerrain_Layer.cpp">
+      <Filter>Quelldateien\Scene\3DScene\TilingTerrain</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -256,6 +277,24 @@
     </ClInclude>
     <ClInclude Include="DirectionalLight.h">
       <Filter>Quelldateien\Scene\3DScene\DirectionalLight</Filter>
+    </ClInclude>
+    <ClInclude Include="PerlinNoise.h">
+      <Filter>Quelldateien\Scene\3DScene\PerlinNoise</Filter>
+    </ClInclude>
+    <ClInclude Include="PerlinNoiseOctaves.h">
+      <Filter>Quelldateien\Scene\3DScene\PerlinNoise</Filter>
+    </ClInclude>
+    <ClInclude Include="TilingTerrain.h">
+      <Filter>Quelldateien\Scene\3DScene\TilingTerrain</Filter>
+    </ClInclude>
+    <ClInclude Include="TilingTerrain_Data.h">
+      <Filter>Quelldateien\Scene\3DScene\TilingTerrain</Filter>
+    </ClInclude>
+    <ClInclude Include="TilingTerrain_Layer.h">
+      <Filter>Quelldateien\Scene\3DScene\TilingTerrain</Filter>
+    </ClInclude>
+    <ClInclude Include="TilingTerrain_Structs.h">
+      <Filter>Quelldateien\Scene\3DScene\TilingTerrain</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
