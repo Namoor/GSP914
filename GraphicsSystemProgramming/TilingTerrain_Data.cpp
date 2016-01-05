@@ -1,4 +1,5 @@
 #include "TilingTerrain_Data.h"
+#include <random>
 
 void TilingTerrain_Data::Init(int SizeX, int SizeY, TilingTerrainType p_DefaultType)
 {
@@ -11,7 +12,7 @@ void TilingTerrain_Data::Init(int SizeX, int SizeY, TilingTerrainType p_DefaultT
 	{
 		for (int y = 0; y < m_SizeY; y++)
 		{
-			SetData(x, y, p_DefaultType);
+			SetData(x, y, (TilingTerrainType)(rand() % 4));
 		}
 	}
 }

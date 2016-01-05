@@ -27,6 +27,8 @@
 
 #include "DirectionalLight.h"
 
+#include "TilingTerrain.h"
+
 class Scene3D : public IScene
 {
 public:
@@ -72,6 +74,8 @@ private:
 	DirectionalLight* m_pDirectionalLight;
 
 	float TimeSinceStart;
+
+	TilingTerrain* m_pTilingTerrain;
 
 private:
 	TexturedMaterial* m_pTextureMaterial;

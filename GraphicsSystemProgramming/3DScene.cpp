@@ -80,6 +80,18 @@ void Scene3D::Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon, ID3D
 
 	m_pDirectionalLight = new DirectionalLight();
 	m_pDirectionalLight->Init(m_pDevice, m_pDevCon);
+
+	
+	TilingTerrain_Data* _pData = new TilingTerrain_Data();
+	_pData->Init(33, 33, TilingTerrainType::Grass);
+
+	//_pData->SetData(1, 1, TilingTerrainType::Snow);
+	_pData->SetData(1, 2, TilingTerrainType::Snow);
+	_pData->SetData(2, 1, TilingTerrainType::Snow);
+	//_pData->SetData(2, 2, TilingTerrainType::Snow);
+	
+	m_pTilingTerrain = new TilingTerrain();
+	m_pTilingTerrain->Init(m_pDevice, m_pDevCon, 32, 32, _pData);
 }
 
 void Scene3D::Update(float p_DeltaTime)
@@ -150,16 +162,16 @@ void Scene3D::Update(float p_DeltaTime)
 void Scene3D::Render()
 {
 	// 1. ShadowMap Binden
-	m_pDirectionalLight->GetShadowMap()->Bind();
+	//m_pDirectionalLight->GetShadowMap()->Bind();
 
 	// 2. Aus Sicht des Lichtes Rendern
 	
-	m_pShadingDemo->RenderDepth(m_pDirectionalLight->GetViewProjectionMatrix(), D3DXVECTOR4(0, 0, 0, 0));
+	//m_pShadingDemo->RenderDepth(m_pDirectionalLight->GetViewProjectionMatrix(), D3DXVECTOR4(0, 0, 0, 0));
 
 
 
 	// 3. Bildschirm binden
-	m_pDevCon->OMSetRenderTargets(1, &m_pBackBuffer, m_pDSV);
+	//m_pDevCon->OMSetRenderTargets(1, &m_pBackBuffer, m_pDSV);
 	//m_pDevCon->ClearDepthStencilView(m_pShadowMap->GetDSV(), D3D11_CLEAR_FLAG::D3D11_CLEAR_DEPTH, 1.0f, 0);
 
 
@@ -178,8 +190,9 @@ void Scene3D::Render()
 
 	// 4. Scene aus sicht der Kamera rendern
 
-	m_pShadingDemo->Render(m_pCamera, m_pDirectionalLight);
+	//m_pShadingDemo->Render(m_pCamera, m_pDirectionalLight);
 
+	m_pTilingTerrain->Render(m_pCamera);
 
 	std::string _FPSString("FPS: ");
 	_FPSString.append(std::to_string(CurrentFPS));

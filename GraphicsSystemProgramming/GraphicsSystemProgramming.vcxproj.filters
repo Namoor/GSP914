@@ -322,5 +322,8 @@
     <FxCompile Include="ShadingDemo.hlsl">
       <Filter>Quelldateien\Scene\3DScene\ShadingDemo</Filter>
     </FxCompile>
+    <FxCompile Include="TilingTerrainShader.hlsl">
+      <Filter>Quelldateien\Scene\3DScene\TilingTerrain</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

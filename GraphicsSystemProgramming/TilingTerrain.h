@@ -2,12 +2,13 @@
 
 
 #include "TilingTerrain_Layer.h"
+#include "TilingTerrain_Data.h"
 #include "Camera.h"
 
 class TilingTerrain
 {
 public:
-	void Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon, int SizeX, int SizeY);
+	void Init(ID3D11Device* p_pDevice, ID3D11DeviceContext* p_pDevCon, int SizeX, int SizeY, TilingTerrain_Data* p_pData);
 
 	void Update(float p_DeltaTime);
 	void Render(Camera* p_pCamera);
